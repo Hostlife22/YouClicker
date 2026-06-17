@@ -23,6 +23,12 @@ import {
   translateSubtitlesMulti,
 } from "./orchestrator";
 import { suppressDevToolsNoise } from "./devtools-noise";
+import {
+  settingsPatchSchema,
+  languageCodes,
+  nonEmptyString,
+  parseOrThrow,
+} from "./validation";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -66,7 +72,9 @@ async function createWindow(): Promise<void> {
 
 function registerIpc(): void {
   ipcMain.handle("settings:get", () => getSettings());
-  ipcMain.handle("settings:update", (_e, patch) => updateSettings(patch));
+  ipcMain.handle("settings:update", (_e, patch) =>
+    updateSettings(parseOrThrow(settingsPatchSchema, patch, "INVALID_SETTINGS")),
+  );
 
   ipcMain.handle("auth:status", () => {
     const accounts = listAccounts();
@@ -79,7 +87,7 @@ function registerIpc(): void {
   ipcMain.handle("accounts:list", () => listAccounts());
   ipcMain.handle("accounts:add", () => addAccount());
   ipcMain.handle("accounts:remove", async (_e, email: string) => {
-    await removeAccount(email);
+    await removeAccount(parseOrThrow(nonEmptyString, email, "INVALID_ACCOUNT"));
     return listAccounts();
   });
   ipcMain.handle("accounts:removeAll", async () => {
@@ -110,12 +118,22 @@ function registerIpc(): void {
   ipcMain.handle(
     "translate:titleDescription",
     (_e, account: string, jobId: string, videoId: string, languages: string[]) =>
-      translateTitleDescriptionMulti(account, jobId, videoId, languages),
+      translateTitleDescriptionMulti(
+        parseOrThrow(nonEmptyString, account, "INVALID_ACCOUNT"),
+        jobId,
+        parseOrThrow(nonEmptyString, videoId, "INVALID_VIDEO_ID"),
+        parseOrThrow(languageCodes, languages, "NO_LANGUAGES_SELECTED"),
+      ),
   );
   ipcMain.handle(
     "translate:subtitles",
     (_e, account: string, jobId: string, videoId: string, languages: string[]) =>
-      translateSubtitlesMulti(account, jobId, videoId, languages),
+      translateSubtitlesMulti(
+        parseOrThrow(nonEmptyString, account, "INVALID_ACCOUNT"),
+        jobId,
+        parseOrThrow(nonEmptyString, videoId, "INVALID_VIDEO_ID"),
+        parseOrThrow(languageCodes, languages, "NO_LANGUAGES_SELECTED"),
+      ),
   );
 
   ipcMain.handle("system:openExternal", (_e, url: string) => shell.openExternal(url));

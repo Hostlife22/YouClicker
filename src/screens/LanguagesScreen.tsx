@@ -2,6 +2,7 @@ import { useTranslation } from "react-i18next";
 import { useApp } from "../store";
 import { AppFrame } from "../components/AppFrame";
 import { LANGUAGES } from "@shared/languages";
+import { estimateQuota, exceedsDailyQuota, DAILY_QUOTA } from "@shared/quota";
 import { api } from "../api";
 import { useState } from "react";
 
@@ -44,17 +45,29 @@ export function LanguagesScreen() {
       return;
     }
     if (!video || !accountId || selected.length === 0) return;
+
+    // Subtitle uploads are the expensive path (~400 quota units each). Warn
+    // before a run that would likely exceed the daily quota.
+    if (mode === "subtitles" && exceedsDailyQuota("subtitles", selected.length)) {
+      const ok = window.confirm(
+        t("languages.quotaWarning", {
+          units: estimateQuota("subtitles", selected.length),
+          limit: DAILY_QUOTA,
+        }),
+      );
+      if (!ok) return;
+    }
+
     const jobId = `${Date.now()}`;
     startJob(jobId, video.id, mode, selected.length);
     setScreen("progress");
     setBusy(true);
     try {
-      if (mode === "title_description") {
-        await api().translate.titleDescription(accountId, jobId, video.id, selected);
-      } else {
-        await api().translate.subtitles(accountId, jobId, video.id, selected);
-      }
-      finishJob("completed");
+      const result =
+        mode === "title_description"
+          ? await api().translate.titleDescription(accountId, jobId, video.id, selected)
+          : await api().translate.subtitles(accountId, jobId, video.id, selected);
+      finishJob("completed", { result });
       // The job mutated server-side localizations/captions; the main-process
       // cache was already invalidated. Refresh the renderer's copies so the
       // detail screen's localization count and the channel list stay accurate.
@@ -62,7 +75,9 @@ export function LanguagesScreen() {
       if (fresh) selectVideo(fresh);
       clearChannelVideos(video.channelId);
     } catch (err) {
-      finishJob("failed", err instanceof Error ? err.message : String(err));
+      finishJob("failed", {
+        error: err instanceof Error ? err.message : String(err),
+      });
     } finally {
       setBusy(false);
     }

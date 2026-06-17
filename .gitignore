@@ -8,3 +8,7 @@ release
 .env.local
 .vite
 screens/.cache
+
+# build / test artifacts
+coverage
+*.tsbuildinfo

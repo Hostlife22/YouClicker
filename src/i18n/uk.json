@@ -69,7 +69,8 @@
     "invert": "Інвертувати",
     "loadDefault": "Завантажити за замовчуванням",
     "saveDefault": "Зберегти за замовчуванням",
-    "selectedCount": "Вибрано: {{count}}"
+    "selectedCount": "Вибрано: {{count}}",
+    "quotaWarning": "Цей переклад субтитрів витратить близько {{units}} одиниць квоти YouTube і може перевищити денний ліміт {{limit}}. Продовжити?"
   },
   "progress": {
     "title": "Ми перекладаємо швидко",
@@ -81,7 +82,10 @@
     "current": "Перекладаємо {{lang}}...",
     "elapsed": "Минуло",
     "translateTitleDesc": "Перекласти назву та опис",
-    "translateSubs": "Перекласти субтитри"
+    "translateSubs": "Перекласти субтитри",
+    "resultUpdated": "Перекладено: {{count}}",
+    "resultFailed": "Помилок: {{count}}",
+    "resultSkipped": "Пропущено: {{count}} (мова оригіналу)"
   },
   "footer": {
     "support": "Група підтримки"
@@ -90,6 +94,15 @@
     "MISSING_OAUTH_CREDENTIALS": "Облікові дані Google OAuth не налаштовані. Відкрийте налаштування та додайте Client ID + Secret.",
     "NOT_AUTHENTICATED": "Ви не увійшли в систему. Спочатку увійдіть через Google.",
     "NO_SOURCE_CAPTIONS": "У відео немає субтитрів для перекладу.",
+    "EMPTY_SOURCE_CAPTION": "Вихідна доріжка субтитрів порожня.",
+    "CUE_TRANSLATION_PARSE_FAILED": "Не вдалося прочитати перекладені субтитри. Спробуйте ще раз.",
+    "NO_REFRESH_TOKEN_RECEIVED": "Google не повернув refresh-токен. Увійдіть знову та надайте доступ.",
+    "OAUTH_NO_CODE": "Авторизацію скасовано або код не отримано.",
+    "OAUTH_STATE_MISMATCH": "Вхід не пройшов перевірку безпеки. Спробуйте знову.",
+    "NO_LANGUAGES_SELECTED": "Виберіть хоча б одну мову перекладу.",
+    "INVALID_SETTINGS": "Недопустимі налаштування.",
+    "INVALID_ACCOUNT": "Недопустимий обліковий запис.",
+    "INVALID_VIDEO_ID": "Недопустиме відео.",
     "ACCOUNT_REAUTH_NEEDED": "Сесія завершилась — увійдіть знову.",
     "generic": "Щось пішло не так: {{message}}"
   }

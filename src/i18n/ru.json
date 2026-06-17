@@ -69,7 +69,8 @@
     "invert": "Инвертировать",
     "loadDefault": "Загрузить значение по умолчанию",
     "saveDefault": "Сохранить значение по умолчанию",
-    "selectedCount": "Выбрано: {{count}}"
+    "selectedCount": "Выбрано: {{count}}",
+    "quotaWarning": "Этот перевод субтитров израсходует около {{units}} единиц квоты YouTube и может превысить дневной лимит {{limit}}. Продолжить?"
   },
   "progress": {
     "title": "Мы переводим быстро",
@@ -81,7 +82,10 @@
     "current": "Перевод {{lang}}...",
     "elapsed": "Прошло",
     "translateTitleDesc": "Перевести название и описание",
-    "translateSubs": "Перевести субтитры"
+    "translateSubs": "Перевести субтитры",
+    "resultUpdated": "Переведено: {{count}}",
+    "resultFailed": "Ошибок: {{count}}",
+    "resultSkipped": "Пропущено: {{count}} (язык оригинала)"
   },
   "footer": {
     "support": "Группа поддержки"
@@ -90,6 +94,15 @@
     "MISSING_OAUTH_CREDENTIALS": "Google OAuth данные не настроены. Откройте настройки и добавьте Client ID + Secret.",
     "NOT_AUTHENTICATED": "Вы не вошли в систему. Войдите через Google.",
     "NO_SOURCE_CAPTIONS": "У видео нет субтитров для перевода.",
+    "EMPTY_SOURCE_CAPTION": "Исходная дорожка субтитров пуста.",
+    "CUE_TRANSLATION_PARSE_FAILED": "Не удалось прочитать переведённые субтитры. Попробуйте ещё раз.",
+    "NO_REFRESH_TOKEN_RECEIVED": "Google не вернул refresh-токен. Войдите снова и предоставьте доступ.",
+    "OAUTH_NO_CODE": "Авторизация отменена или код не получен.",
+    "OAUTH_STATE_MISMATCH": "Вход не прошёл проверку безопасности. Попробуйте снова.",
+    "NO_LANGUAGES_SELECTED": "Выберите хотя бы один язык перевода.",
+    "INVALID_SETTINGS": "Недопустимые настройки.",
+    "INVALID_ACCOUNT": "Недопустимый аккаунт.",
+    "INVALID_VIDEO_ID": "Недопустимое видео.",
     "ACCOUNT_REAUTH_NEEDED": "Сессия истекла — войдите снова.",
     "generic": "Что-то пошло не так: {{message}}"
   }

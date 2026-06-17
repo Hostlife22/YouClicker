@@ -69,7 +69,8 @@
     "invert": "Invert",
     "loadDefault": "Load defaults",
     "saveDefault": "Save defaults",
-    "selectedCount": "{{count}} selected"
+    "selectedCount": "{{count}} selected",
+    "quotaWarning": "This subtitle run will use about {{units}} YouTube quota units and may exceed your daily limit of {{limit}}. Continue?"
   },
   "progress": {
     "title": "We translate fast",
@@ -81,7 +82,10 @@
     "current": "Translating {{lang}}...",
     "elapsed": "Elapsed",
     "translateTitleDesc": "Translate title and description",
-    "translateSubs": "Translate subtitles"
+    "translateSubs": "Translate subtitles",
+    "resultUpdated": "{{count}} translated",
+    "resultFailed": "{{count}} failed",
+    "resultSkipped": "{{count}} skipped (source language)"
   },
   "footer": {
     "support": "Support Group"
@@ -90,6 +94,15 @@
     "MISSING_OAUTH_CREDENTIALS": "Google OAuth credentials are not set. Open Settings and add Client ID + Secret.",
     "NOT_AUTHENTICATED": "You are not signed in. Sign in with Google first.",
     "NO_SOURCE_CAPTIONS": "Video has no captions to translate from.",
+    "EMPTY_SOURCE_CAPTION": "The source caption track is empty.",
+    "CUE_TRANSLATION_PARSE_FAILED": "Could not read the translated subtitles. Please try again.",
+    "NO_REFRESH_TOKEN_RECEIVED": "Google did not return a refresh token. Sign in again and grant access.",
+    "OAUTH_NO_CODE": "Authorization was cancelled or returned no code.",
+    "OAUTH_STATE_MISMATCH": "Sign-in failed a security check. Please try again.",
+    "NO_LANGUAGES_SELECTED": "Select at least one target language.",
+    "INVALID_SETTINGS": "Those settings are invalid.",
+    "INVALID_ACCOUNT": "Invalid account.",
+    "INVALID_VIDEO_ID": "Invalid video.",
     "ACCOUNT_REAUTH_NEEDED": "Session expired — sign in again.",
     "generic": "Something went wrong: {{message}}"
   }

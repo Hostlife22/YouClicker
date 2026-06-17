@@ -69,7 +69,8 @@
     "invert": "Inverser",
     "loadDefault": "Charger par défaut",
     "saveDefault": "Enregistrer par défaut",
-    "selectedCount": "{{count}} sélectionnées"
+    "selectedCount": "{{count}} sélectionnées",
+    "quotaWarning": "Cette traduction de sous-titres utilisera environ {{units}} unités de quota YouTube et pourrait dépasser votre limite quotidienne de {{limit}}. Continuer ?"
   },
   "progress": {
     "title": "Nous traduisons rapidement",
@@ -81,7 +82,10 @@
     "current": "Traduction de {{lang}}...",
     "elapsed": "Temps écoulé",
     "translateTitleDesc": "Traduire le titre et la description",
-    "translateSubs": "Traduire les sous-titres"
+    "translateSubs": "Traduire les sous-titres",
+    "resultUpdated": "{{count}} traduites",
+    "resultFailed": "{{count}} échouées",
+    "resultSkipped": "{{count}} ignorées (langue source)"
   },
   "footer": {
     "support": "Groupe de support"
@@ -90,6 +94,15 @@
     "MISSING_OAUTH_CREDENTIALS": "Les identifiants Google OAuth ne sont pas définis. Ouvrez les paramètres et ajoutez Client ID + Secret.",
     "NOT_AUTHENTICATED": "Vous n'êtes pas connecté. Connectez-vous d'abord avec Google.",
     "NO_SOURCE_CAPTIONS": "La vidéo n'a pas de sous-titres à traduire.",
+    "EMPTY_SOURCE_CAPTION": "La piste de sous-titres source est vide.",
+    "CUE_TRANSLATION_PARSE_FAILED": "Impossible de lire les sous-titres traduits. Veuillez réessayer.",
+    "NO_REFRESH_TOKEN_RECEIVED": "Google n'a pas renvoyé de jeton de rafraîchissement. Reconnectez-vous et accordez l'accès.",
+    "OAUTH_NO_CODE": "L'autorisation a été annulée ou n'a renvoyé aucun code.",
+    "OAUTH_STATE_MISMATCH": "La connexion a échoué à une vérification de sécurité. Veuillez réessayer.",
+    "NO_LANGUAGES_SELECTED": "Sélectionnez au moins une langue cible.",
+    "INVALID_SETTINGS": "Ces paramètres sont invalides.",
+    "INVALID_ACCOUNT": "Compte invalide.",
+    "INVALID_VIDEO_ID": "Vidéo invalide.",
     "ACCOUNT_REAUTH_NEEDED": "Session expirée — reconnectez-vous.",
     "generic": "Quelque chose s'est mal passé : {{message}}"
   }

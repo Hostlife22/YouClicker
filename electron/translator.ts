@@ -1,34 +1,42 @@
 import { query } from "@anthropic-ai/claude-agent-sdk";
 import { findLanguage } from "../shared/languages";
 import type { Localization } from "../shared/types";
+import { stripJsonFences } from "./json";
+import { titleDescriptionSchema, cueBatchSchema } from "./validation";
+import { withRetry } from "./retry";
 import log from "electron-log/main";
 
 type AssistantContentBlock = { type: string; text?: string };
 
 async function runClaude(prompt: string, system: string): Promise<string> {
-  let output = "";
-  const stream = query({
-    prompt,
-    options: {
-      model: "claude-haiku-4-5-20251001",
-      permissionMode: "bypassPermissions",
-      systemPrompt: system,
-      allowedTools: [],
-      maxTurns: 1,
-    },
-  });
-  for await (const msg of stream) {
-    if (msg.type === "assistant") {
-      const content = (msg.message as { content?: AssistantContentBlock[] })
-        .content;
-      for (const block of content ?? []) {
-        if (block.type === "text" && block.text) {
-          output += block.text;
+  return withRetry(
+    async () => {
+      let output = "";
+      const stream = query({
+        prompt,
+        options: {
+          model: "claude-haiku-4-5-20251001",
+          permissionMode: "bypassPermissions",
+          systemPrompt: system,
+          allowedTools: [],
+          maxTurns: 1,
+        },
+      });
+      for await (const msg of stream) {
+        if (msg.type === "assistant") {
+          const content = (msg.message as { content?: AssistantContentBlock[] })
+            .content;
+          for (const block of content ?? []) {
+            if (block.type === "text" && block.text) {
+              output += block.text;
+            }
+          }
         }
       }
-    }
-  }
-  return output.trim();
+      return output.trim();
+    },
+    { label: "claude" },
+  );
 }
 
 function languageLabel(code: string): string {
@@ -81,23 +89,30 @@ ${description}
 Respond with JSON only.`;
 
   const raw = await runClaude(prompt, system);
-  const cleaned = stripJsonFences(raw);
-  try {
-    const parsed = JSON.parse(cleaned) as { title?: string; description?: string };
+  const parsed = titleDescriptionSchema.safeParse(safeJsonParse(stripJsonFences(raw)));
+  if (parsed.success) {
     return {
-      title: (parsed.title ?? "").trim() || title,
-      description: (parsed.description ?? "").trim() || description,
+      title: parsed.data.title.trim() || title,
+      description: parsed.data.description.trim() || description,
     };
-  } catch (err) {
-    log.warn("[translator] JSON parse failed, falling back to two-shot", {
-      targetLang,
-      err: String(err),
-    });
-    const [t, d] = await Promise.all([
-      translateText(title, sourceLang, targetLang),
-      translateText(description, sourceLang, targetLang),
-    ]);
-    return { title: t || title, description: d || description };
+  }
+  log.warn("[translator] title/desc JSON invalid, falling back to two-shot", {
+    targetLang,
+    issues: parsed.error.issues.map((i) => i.message),
+  });
+  const [t, d] = await Promise.all([
+    translateText(title, sourceLang, targetLang),
+    translateText(description, sourceLang, targetLang),
+  ]);
+  return { title: t || title, description: d || description };
+}
+
+/** Parse JSON without throwing; returns `null` on malformed input. */
+function safeJsonParse(text: string): unknown {
+  try {
+    return JSON.parse(text);
+  } catch {
+    return null;
   }
 }
 
@@ -127,28 +142,18 @@ ${payload}`;
 
   const raw = await runClaude(prompt, CUE_SYSTEM);
   const cleaned = stripJsonFences(raw);
-  let parsed: { i: number; t: string }[];
-  try {
-    parsed = JSON.parse(cleaned) as { i: number; t: string }[];
-  } catch (err) {
-    log.error("[translator] cue batch JSON parse failed", {
+  const parsed = cueBatchSchema.safeParse(safeJsonParse(cleaned));
+  if (!parsed.success) {
+    log.error("[translator] cue batch JSON invalid", {
       targetLang,
-      err: String(err),
+      issues: parsed.error.issues.map((i) => i.message),
       sample: cleaned.slice(0, 200),
     });
     throw new Error("CUE_TRANSLATION_PARSE_FAILED");
   }
-  const byIndex = new Map(parsed.map((p) => [p.i, p.t]));
+  const byIndex = new Map(parsed.data.map((p) => [p.i, p.t]));
   return cues.map((c) => ({
     index: c.index,
     text: byIndex.get(c.index) ?? c.text,
   }));
-}
-
-function stripJsonFences(text: string): string {
-  let t = text.trim();
-  if (t.startsWith("```")) {
-    t = t.replace(/^```(?:json)?\s*/i, "").replace(/```$/g, "").trim();
-  }
-  return t;
 }

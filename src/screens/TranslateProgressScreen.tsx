@@ -98,6 +98,28 @@ export function TranslateProgressScreen() {
             )}
           </Step>
         </div>
+        {progress.result && (
+          <div className="w-full max-w-2xl text-sm space-y-1">
+            <div className="text-green-400">
+              {t("progress.resultUpdated", { count: progress.result.updated.length })}
+            </div>
+            {progress.result.failed.length > 0 && (
+              <div className="text-[#e63946]">
+                {t("progress.resultFailed", { count: progress.result.failed.length })}:{" "}
+                {progress.result.failed
+                  .map((c) => findLanguage(c)?.name ?? c)
+                  .join(", ")}
+              </div>
+            )}
+            {(progress.result.skipped?.length ?? 0) > 0 && (
+              <div className="text-[#a0a0a0]">
+                {t("progress.resultSkipped", {
+                  count: progress.result.skipped?.length ?? 0,
+                })}
+              </div>
+            )}
+          </div>
+        )}
         <div className="flex gap-3 mt-4">
           <button
             onClick={() => setScreen("video")}

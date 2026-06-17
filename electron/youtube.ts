@@ -11,6 +11,7 @@ import type {
   VideoPage,
 } from "../shared/types";
 import { withCache, invalidate, TTL } from "./cache";
+import { withRetry } from "./retry";
 import log from "electron-log/main";
 
 /**
@@ -29,11 +30,15 @@ export async function listMyChannels(
 ): Promise<Channel[]> {
   return withCache(`channels:${account}`, TTL.CHANNELS, force, async () => {
     const client = await yt(account);
-    const res = await client.channels.list({
-      part: ["snippet", "statistics", "contentDetails"],
-      mine: true,
-      maxResults: 50,
-    });
+    const res = await withRetry(
+      () =>
+        client.channels.list({
+          part: ["snippet", "statistics", "contentDetails"],
+          mine: true,
+          maxResults: 50,
+        }),
+      { label: "channels.list" },
+    );
     return (res.data.items ?? []).map((c) => ({
       id: c.id ?? "",
       accountId: account,
@@ -89,21 +94,26 @@ export async function listChannelVideos(
     const client = await yt(account);
     let uploadsId = uploadsPlaylistId;
     if (!uploadsId) {
-      const chRes = await client.channels.list({
-        part: ["contentDetails"],
-        id: [channelId],
-      });
+      const chRes = await withRetry(
+        () => client.channels.list({ part: ["contentDetails"], id: [channelId] }),
+        { label: "channels.list" },
+      );
       uploadsId = chRes.data.items?.[0]?.contentDetails?.relatedPlaylists?.uploads ?? null;
     }
     if (!uploadsId) {
       return { videos: [], nextPageToken: null, totalResults: 0 };
     }
-    const plRes = await client.playlistItems.list({
-      part: ["contentDetails", "snippet"],
-      playlistId: uploadsId,
-      maxResults: pageSize,
-      pageToken: pageToken ?? undefined,
-    });
+    const playlistId = uploadsId;
+    const plRes = await withRetry(
+      () =>
+        client.playlistItems.list({
+          part: ["contentDetails", "snippet"],
+          playlistId,
+          maxResults: pageSize,
+          pageToken: pageToken ?? undefined,
+        }),
+      { label: "playlistItems.list" },
+    );
     const ids = (plRes.data.items ?? [])
       .map((i) => i.contentDetails?.videoId)
       .filter((id): id is string => Boolean(id));
@@ -114,10 +124,10 @@ export async function listChannelVideos(
         totalResults: plRes.data.pageInfo?.totalResults ?? 0,
       };
     }
-    const vRes = await client.videos.list({
-      part: ["snippet", "localizations"],
-      id: ids,
-    });
+    const vRes = await withRetry(
+      () => client.videos.list({ part: ["snippet", "localizations"], id: ids }),
+      { label: "videos.list" },
+    );
     const videos: Video[] = (vRes.data.items ?? []).map(toVideo);
     return {
       videos,
@@ -134,10 +144,10 @@ export async function getVideo(
 ): Promise<Video | null> {
   return withCache(`video:${account}:${videoId}`, TTL.VIDEO, force, async () => {
     const client = await yt(account);
-    const res = await client.videos.list({
-      part: ["snippet", "localizations"],
-      id: [videoId],
-    });
+    const res = await withRetry(
+      () => client.videos.list({ part: ["snippet", "localizations"], id: [videoId] }),
+      { label: "videos.list" },
+    );
     const item = res.data.items?.[0];
     return item ? toVideo(item) : null;
   });
@@ -177,10 +187,10 @@ export async function updateVideoLocalizations(
   newLocalizations: Localizations,
 ): Promise<Video> {
   const client = await yt(account);
-  const existing = await client.videos.list({
-    part: ["snippet", "localizations"],
-    id: [videoId],
-  });
+  const existing = await withRetry(
+    () => client.videos.list({ part: ["snippet", "localizations"], id: [videoId] }),
+    { label: "videos.list" },
+  );
   const item = existing.data.items?.[0];
   if (!item) throw new Error(`Video ${videoId} not found`);
 
@@ -200,20 +210,24 @@ export async function updateVideoLocalizations(
     ...newLocalizations,
   };
 
-  const res = await client.videos.update({
-    part: ["snippet", "localizations"],
-    requestBody: {
-      id: videoId,
-      snippet: {
-        title: item.snippet?.title ?? "",
-        description: item.snippet?.description ?? "",
-        categoryId: item.snippet?.categoryId ?? undefined,
-        defaultLanguage: item.snippet?.defaultLanguage ?? undefined,
-        tags: item.snippet?.tags ?? undefined,
-      },
-      localizations: mergedLocalizations,
-    },
-  });
+  const res = await withRetry(
+    () =>
+      client.videos.update({
+        part: ["snippet", "localizations"],
+        requestBody: {
+          id: videoId,
+          snippet: {
+            title: item.snippet?.title ?? "",
+            description: item.snippet?.description ?? "",
+            categoryId: item.snippet?.categoryId ?? undefined,
+            defaultLanguage: item.snippet?.defaultLanguage ?? undefined,
+            tags: item.snippet?.tags ?? undefined,
+          },
+          localizations: mergedLocalizations,
+        },
+      }),
+    { label: "videos.update" },
+  );
   log.info("[youtube] updated localizations", {
     videoId,
     added: Object.keys(newLocalizations),
@@ -232,10 +246,10 @@ export async function listCaptions(
 ): Promise<Caption[]> {
   return withCache(`captions:${account}:${videoId}`, TTL.CAPTIONS, force, async () => {
     const client = await yt(account);
-    const res = await client.captions.list({
-      part: ["snippet"],
-      videoId,
-    });
+    const res = await withRetry(
+      () => client.captions.list({ part: ["snippet"], videoId }),
+      { label: "captions.list" },
+    );
     return (res.data.items ?? []).map((c) => ({
       id: c.id ?? "",
       language: c.snippet?.language ?? "",
@@ -251,9 +265,13 @@ export async function downloadCaption(
   format: "srt" | "vtt" = "srt",
 ): Promise<string> {
   const client = await yt(account);
-  const res = await client.captions.download(
-    { id: captionId, tfmt: format },
-    { responseType: "text" },
+  const res = await withRetry(
+    () =>
+      client.captions.download(
+        { id: captionId, tfmt: format },
+        { responseType: "text" },
+      ),
+    { label: "captions.download" },
   );
   return typeof res.data === "string"
     ? res.data

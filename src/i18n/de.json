@@ -69,7 +69,8 @@
     "invert": "Umkehren",
     "loadDefault": "Standard laden",
     "saveDefault": "Standard speichern",
-    "selectedCount": "{{count}} ausgewählt"
+    "selectedCount": "{{count}} ausgewählt",
+    "quotaWarning": "Dieser Untertitel-Lauf verbraucht etwa {{units}} YouTube-Kontingenteinheiten und überschreitet möglicherweise Ihr Tageslimit von {{limit}}. Fortfahren?"
   },
   "progress": {
     "title": "Wir übersetzen schnell",
@@ -81,7 +82,10 @@
     "current": "Übersetze {{lang}}...",
     "elapsed": "Verstrichene Zeit",
     "translateTitleDesc": "Titel und Beschreibung übersetzen",
-    "translateSubs": "Untertitel übersetzen"
+    "translateSubs": "Untertitel übersetzen",
+    "resultUpdated": "{{count}} übersetzt",
+    "resultFailed": "{{count}} fehlgeschlagen",
+    "resultSkipped": "{{count}} übersprungen (Ausgangssprache)"
   },
   "footer": {
     "support": "Support-Gruppe"
@@ -90,6 +94,15 @@
     "MISSING_OAUTH_CREDENTIALS": "Google OAuth-Anmeldedaten sind nicht gesetzt. Öffnen Sie die Einstellungen und fügen Sie Client ID + Secret hinzu.",
     "NOT_AUTHENTICATED": "Sie sind nicht angemeldet. Melden Sie sich zuerst mit Google an.",
     "NO_SOURCE_CAPTIONS": "Video hat keine Untertitel zum Übersetzen.",
+    "EMPTY_SOURCE_CAPTION": "Die Quell-Untertitelspur ist leer.",
+    "CUE_TRANSLATION_PARSE_FAILED": "Die übersetzten Untertitel konnten nicht gelesen werden. Bitte erneut versuchen.",
+    "NO_REFRESH_TOKEN_RECEIVED": "Google hat kein Refresh-Token zurückgegeben. Melden Sie sich erneut an und erteilen Sie Zugriff.",
+    "OAUTH_NO_CODE": "Die Autorisierung wurde abgebrochen oder lieferte keinen Code.",
+    "OAUTH_STATE_MISMATCH": "Die Anmeldung hat eine Sicherheitsprüfung nicht bestanden. Bitte erneut versuchen.",
+    "NO_LANGUAGES_SELECTED": "Wählen Sie mindestens eine Zielsprache.",
+    "INVALID_SETTINGS": "Diese Einstellungen sind ungültig.",
+    "INVALID_ACCOUNT": "Ungültiges Konto.",
+    "INVALID_VIDEO_ID": "Ungültiges Video.",
     "ACCOUNT_REAUTH_NEEDED": "Sitzung abgelaufen — bitte erneut anmelden.",
     "generic": "Etwas ist schiefgelaufen: {{message}}"
   }
