@@ -39,6 +39,11 @@ export function AppFrame({ children, showFooter = true, topRight, topLeft }: Pro
           </div>
           <div className="flex-1 flex justify-end gap-2">
             <IconButton
+              onClick={() => setScreen("history")}
+              label="🕘"
+              ariaLabel={t("history.title")}
+            />
+            <IconButton
               onClick={() => setScreen("settings")}
               label="⚙"
               ariaLabel={t("settings.title")}

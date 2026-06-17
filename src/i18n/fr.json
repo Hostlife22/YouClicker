@@ -97,6 +97,17 @@
     "helpTitle": "Aide",
     "helpBody": "Version personnelle — la traduction s'exécute sur votre propre abonnement local Claude Code ; aucun crédit requis."
   },
+  "history": {
+    "title": "Historique",
+    "empty": "Aucune tâche de traduction pour l'instant.",
+    "clear": "Effacer l'historique",
+    "confirmClear": "Supprimer tout l'historique des tâches ? Cette action est irréversible.",
+    "status": {
+      "running": "En cours",
+      "completed": "Terminé",
+      "failed": "Échoué"
+    }
+  },
   "errors": {
     "MISSING_OAUTH_CREDENTIALS": "Les identifiants Google OAuth ne sont pas définis. Ouvrez les paramètres et ajoutez Client ID + Secret.",
     "NOT_AUTHENTICATED": "Vous n'êtes pas connecté. Connectez-vous d'abord avec Google.",

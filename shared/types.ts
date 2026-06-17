@@ -71,14 +71,24 @@ export type TitleDescriptionResult = { updated: string[]; failed: string[] };
 /** Result of a multi-language subtitle translation run. */
 export type SubtitlesResult = { updated: string[]; failed: string[]; skipped: string[] };
 
+export type JobStatus = "running" | "completed" | "failed";
+
+/**
+ * A persisted record of one translation run, shown in the history screen.
+ * Survives app restarts (stored by the main process). `updated`/`failed`/
+ * `skipped` hold the per-language outcome once the run finishes.
+ */
 export type TranslationJob = {
   id: string;
   videoId: string;
+  videoTitle: string;
   step: TranslationStep;
   targetLanguages: string[];
-  status: "queued" | "running" | "completed" | "failed";
-  progress: { done: number; total: number };
-  startedAt: number | null;
+  status: JobStatus;
+  updated: string[];
+  failed: string[];
+  skipped: string[];
+  startedAt: number;
   finishedAt: number | null;
   error: string | null;
 };

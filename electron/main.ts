@@ -22,6 +22,7 @@ import {
   translateTitleDescriptionMulti,
   translateSubtitlesMulti,
 } from "./orchestrator";
+import { listJobs, clearJobs } from "./jobs";
 import { suppressDevToolsNoise } from "./devtools-noise";
 import {
   settingsPatchSchema,
@@ -135,6 +136,9 @@ function registerIpc(): void {
         parseOrThrow(languageCodes, languages, "NO_LANGUAGES_SELECTED"),
       ),
   );
+
+  ipcMain.handle("jobs:list", () => listJobs());
+  ipcMain.handle("jobs:clear", () => clearJobs());
 
   ipcMain.handle("system:openExternal", (_e, url: string) => shell.openExternal(url));
 }

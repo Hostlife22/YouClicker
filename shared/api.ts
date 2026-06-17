@@ -9,6 +9,7 @@ import type {
   ProgressStatus,
   TitleDescriptionResult,
   SubtitlesResult,
+  TranslationJob,
 } from "./types";
 
 export type ProgressEvent = {
@@ -65,6 +66,10 @@ export type Api = {
       languages: string[],
     ) => Promise<SubtitlesResult>;
     onProgress: (cb: (e: ProgressEvent) => void) => () => void;
+  };
+  jobs: {
+    list: () => Promise<TranslationJob[]>;
+    clear: () => Promise<void>;
   };
   system: {
     openExternal: (url: string) => Promise<void>;

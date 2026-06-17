@@ -10,6 +10,7 @@ import {
 } from "./youtube";
 import { translateTitleAndDescription } from "./translator";
 import { translateSRT } from "./subtitles";
+import { recordJobStart, recordJobFinish } from "./jobs";
 import type { ProgressEvent } from "../shared/api";
 import type {
   Localizations,
@@ -33,6 +34,15 @@ export async function translateTitleDescriptionMulti(
   const video = await getVideo(account, videoId);
   if (!video) throw new Error(`Video ${videoId} not found`);
   const sourceLang = video.defaultLanguage ?? video.defaultAudioLanguage ?? null;
+
+  recordJobStart({
+    id: jobId,
+    videoId,
+    videoTitle: video.title,
+    step: "title_description",
+    targetLanguages,
+    startedAt,
+  });
 
   const updated: string[] = [];
   const failed: string[] = [];
@@ -88,6 +98,12 @@ export async function translateTitleDescriptionMulti(
     await updateVideoLocalizations(account, videoId, newLocalizations);
   }
 
+  recordJobFinish(jobId, {
+    status: "completed",
+    updated,
+    failed,
+    finishedAt: Date.now(),
+  });
   emit({
     jobId,
     videoId,
@@ -111,8 +127,22 @@ export async function translateSubtitlesMulti(
   if (!video) throw new Error(`Video ${videoId} not found`);
   const sourceLang = video.defaultLanguage ?? video.defaultAudioLanguage ?? null;
 
+  recordJobStart({
+    id: jobId,
+    videoId,
+    videoTitle: video.title,
+    step: "subtitles",
+    targetLanguages,
+    startedAt,
+  });
+
   const captions = await listCaptions(account, videoId);
   if (captions.length === 0) {
+    recordJobFinish(jobId, {
+      status: "failed",
+      error: "NO_SOURCE_CAPTIONS",
+      finishedAt: Date.now(),
+    });
     emit({
       jobId,
       videoId,
@@ -131,6 +161,11 @@ export async function translateSubtitlesMulti(
 
   const sourceSRT = await downloadCaption(account, sourceCaption.id, "srt");
   if (!sourceSRT.trim()) {
+    recordJobFinish(jobId, {
+      status: "failed",
+      error: "EMPTY_SOURCE_CAPTION",
+      finishedAt: Date.now(),
+    });
     throw new Error("EMPTY_SOURCE_CAPTION");
   }
 
@@ -191,6 +226,13 @@ export async function translateSubtitlesMulti(
     });
   }
 
+  recordJobFinish(jobId, {
+    status: "completed",
+    updated,
+    failed,
+    skipped,
+    finishedAt: Date.now(),
+  });
   emit({
     jobId,
     videoId,

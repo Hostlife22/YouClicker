@@ -8,6 +8,7 @@ import type {
   VideoPage,
   TitleDescriptionResult,
   SubtitlesResult,
+  TranslationJob,
 } from "../shared/types";
 import type { Api, ProgressEvent } from "../shared/api";
 
@@ -71,6 +72,10 @@ const api: Api = {
       ipcRenderer.on("translation:progress", listener);
       return () => ipcRenderer.removeListener("translation:progress", listener);
     },
+  },
+  jobs: {
+    list: (): Promise<TranslationJob[]> => ipcRenderer.invoke("jobs:list"),
+    clear: (): Promise<void> => ipcRenderer.invoke("jobs:clear"),
   },
   system: {
     openExternal: (url: string): Promise<void> =>

@@ -97,6 +97,17 @@
     "helpTitle": "Help",
     "helpBody": "Personal fork — translation runs on your own local Claude Code subscription; no credits required."
   },
+  "history": {
+    "title": "History",
+    "empty": "No translation jobs yet.",
+    "clear": "Clear history",
+    "confirmClear": "Remove all job history? This cannot be undone.",
+    "status": {
+      "running": "Running",
+      "completed": "Completed",
+      "failed": "Failed"
+    }
+  },
   "errors": {
     "MISSING_OAUTH_CREDENTIALS": "Google OAuth credentials are not set. Open Settings and add Client ID + Secret.",
     "NOT_AUTHENTICATED": "You are not signed in. Sign in with Google first.",

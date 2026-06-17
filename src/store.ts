@@ -16,7 +16,8 @@ export type Screen =
   | "videos"
   | "video"
   | "languages"
-  | "progress";
+  | "progress"
+  | "history";
 
 type TranslationResult = {
   updated: string[];
