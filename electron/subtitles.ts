@@ -70,7 +70,6 @@ export async function translateSRT(
   srt: string,
   sourceLang: string | null,
   targetLang: string,
-  onProgress?: (done: number, total: number) => void,
 ): Promise<string> {
   const cues = parseSRT(srt);
   if (cues.length === 0) return srt;
@@ -86,11 +85,12 @@ export async function translateSRT(
 
   const queue = new PQueue({ concurrency: CONCURRENCY });
   const translatedBatches: SubtitleCue[][] = new Array(batches.length);
-  let completedBatches = 0;
 
   await Promise.all(
     batches.map((batch, i) =>
       queue.add(async () => {
+        // translateCueBatch returns one entry per input cue, keyed by index,
+        // so we remap defensively rather than trusting array order.
         const result = await translateCueBatch(
           batch.map((c) => ({ index: c.index, text: c.text })),
           sourceLang,
@@ -101,8 +101,6 @@ export async function translateSRT(
           ...c,
           text: byIndex.get(c.index) ?? c.text,
         }));
-        completedBatches += 1;
-        onProgress?.(completedBatches, batches.length);
       }),
     ),
   );

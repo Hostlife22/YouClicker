@@ -5,6 +5,9 @@ import type {
   Settings,
   Account,
   AllChannels,
+  VideoPage,
+  TitleDescriptionResult,
+  SubtitlesResult,
 } from "../shared/types";
 import type { Api, ProgressEvent } from "../shared/api";
 
@@ -34,7 +37,7 @@ const api: Api = {
       pageToken: string | null,
       uploadsPlaylistId: string | null = null,
       force = false,
-    ): Promise<{ videos: Video[]; nextPageToken: string | null; totalResults: number }> =>
+    ): Promise<VideoPage> =>
       ipcRenderer.invoke(
         "youtube:videos",
         account,
@@ -54,14 +57,14 @@ const api: Api = {
       jobId: string,
       videoId: string,
       languages: string[],
-    ): Promise<{ updated: string[]; failed: string[] }> =>
+    ): Promise<TitleDescriptionResult> =>
       ipcRenderer.invoke("translate:titleDescription", account, jobId, videoId, languages),
     subtitles: (
       account: string,
       jobId: string,
       videoId: string,
       languages: string[],
-    ): Promise<{ updated: string[]; failed: string[]; skipped: string[] }> =>
+    ): Promise<SubtitlesResult> =>
       ipcRenderer.invoke("translate:subtitles", account, jobId, videoId, languages),
     onProgress: (cb: (e: ProgressEvent) => void): (() => void) => {
       const listener = (_: unknown, payload: ProgressEvent) => cb(payload);

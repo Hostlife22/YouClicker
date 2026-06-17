@@ -19,6 +19,7 @@ export function LanguagesScreen() {
   const accountId = useApp((s) => s.selectedAccountId);
   const selectVideo = useApp((s) => s.selectVideo);
   const clearChannelVideos = useApp((s) => s.clearChannelVideos);
+  const mode = useApp((s) => s.translationMode) ?? "title_description";
 
   const [busy, setBusy] = useState(false);
 
@@ -36,12 +37,6 @@ export function LanguagesScreen() {
     const updated = await api().settings.update({ defaultLanguages: selected });
     setSettings(updated);
   }
-
-  const mode = (sessionStorage.getItem("pendingMode") as
-    | "title_description"
-    | "subtitles"
-    | "select"
-    | null) ?? "title_description";
 
   async function confirm() {
     if (mode === "select") {
@@ -74,7 +69,7 @@ export function LanguagesScreen() {
   }
 
   return (
-    <AppFrame topLeft={<div>📊 0</div>}>
+    <AppFrame>
       <div className="h-full flex flex-col p-6">
         <div className="flex items-center gap-2 mb-3">
           <button

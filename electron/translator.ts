@@ -1,5 +1,6 @@
 import { query } from "@anthropic-ai/claude-agent-sdk";
 import { findLanguage } from "../shared/languages";
+import type { Localization } from "../shared/types";
 import log from "electron-log/main";
 
 type AssistantContentBlock = { type: string; text?: string };
@@ -63,7 +64,7 @@ export async function translateTitleAndDescription(
   description: string,
   sourceLang: string | null,
   targetLang: string,
-): Promise<{ title: string; description: string }> {
+): Promise<Localization> {
   const sourceLabel = sourceLang ? languageLabel(sourceLang) : "the source language (auto-detect)";
   const system = `${TRANSLATE_SYSTEM}
 

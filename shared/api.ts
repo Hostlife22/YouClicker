@@ -4,13 +4,18 @@ import type {
   Settings,
   Account,
   AllChannels,
+  VideoPage,
+  TranslationStep,
+  ProgressStatus,
+  TitleDescriptionResult,
+  SubtitlesResult,
 } from "./types";
 
 export type ProgressEvent = {
   jobId: string;
   videoId: string;
-  step: "title_description" | "subtitles";
-  status: "running" | "language_done" | "completed" | "failed";
+  step: TranslationStep;
+  status: ProgressStatus;
   done: number;
   total: number;
   currentLanguage?: string;
@@ -42,7 +47,7 @@ export type Api = {
       pageToken: string | null,
       uploadsPlaylistId?: string | null,
       force?: boolean,
-    ) => Promise<{ videos: Video[]; nextPageToken: string | null; totalResults: number }>;
+    ) => Promise<VideoPage>;
     video: (account: string, videoId: string, force?: boolean) => Promise<Video | null>;
     captions: (account: string, videoId: string, force?: boolean) => Promise<Caption[]>;
   };
@@ -52,13 +57,13 @@ export type Api = {
       jobId: string,
       videoId: string,
       languages: string[],
-    ) => Promise<{ updated: string[]; failed: string[] }>;
+    ) => Promise<TitleDescriptionResult>;
     subtitles: (
       account: string,
       jobId: string,
       videoId: string,
       languages: string[],
-    ) => Promise<{ updated: string[]; failed: string[]; skipped: string[] }>;
+    ) => Promise<SubtitlesResult>;
     onProgress: (cb: (e: ProgressEvent) => void) => () => void;
   };
   system: {

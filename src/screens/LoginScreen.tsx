@@ -2,6 +2,7 @@ import { useTranslation } from "react-i18next";
 import { useState } from "react";
 import { useApp } from "../store";
 import { AppFrame } from "../components/AppFrame";
+import { errorText } from "../lib/errorText";
 import { api } from "../api";
 
 export function LoginScreen() {
@@ -67,7 +68,7 @@ export function LoginScreen() {
                 </button>
                 {error && (
                   <div className="text-sm text-[#e63946] mt-2">
-                    {t(`errors.${error}`, { defaultValue: error })}
+                    {errorText(t, error)}
                   </div>
                 )}
               </>

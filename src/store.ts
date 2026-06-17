@@ -1,5 +1,12 @@
 import { create } from "zustand";
-import type { Account, Channel, Settings, Video } from "@shared/types";
+import type {
+  Account,
+  Channel,
+  Settings,
+  Video,
+  TranslationStep,
+  TranslationMode,
+} from "@shared/types";
 
 export type Screen =
   | "welcome"
@@ -14,7 +21,7 @@ export type Screen =
 type ProgressState = {
   jobId: string | null;
   videoId: string | null;
-  step: "title_description" | "subtitles" | null;
+  step: TranslationStep | null;
   status: "idle" | "running" | "completed" | "failed";
   done: number;
   total: number;
@@ -37,6 +44,7 @@ type AppState = {
   selectedAccountId: string | null;
   selectedVideo: Video | null;
   selectedLanguages: string[];
+  translationMode: TranslationMode | null;
   videosByChannel: Record<string, VideoCacheEntry>;
   progress: ProgressState;
   setScreen: (s: Screen) => void;
@@ -50,7 +58,8 @@ type AppState = {
   clearChannelVideos: (channelId: string) => void;
   setSelectedLanguages: (langs: string[]) => void;
   toggleLanguage: (code: string) => void;
-  startJob: (jobId: string, videoId: string, step: "title_description" | "subtitles", total: number) => void;
+  setTranslationMode: (mode: TranslationMode | null) => void;
+  startJob: (jobId: string, videoId: string, step: TranslationStep, total: number) => void;
   updateProgress: (done: number, currentLanguage: string | null) => void;
   finishJob: (status: "completed" | "failed", error?: string) => void;
 };
@@ -79,6 +88,7 @@ export const useApp = create<AppState>((set) => ({
   selectedAccountId: null,
   selectedVideo: null,
   selectedLanguages: [],
+  translationMode: null,
   videosByChannel: {},
   progress: emptyProgress,
   setScreen: (screen) => set({ screen }),
@@ -99,6 +109,7 @@ export const useApp = create<AppState>((set) => ({
       return { videosByChannel: rest };
     }),
   setSelectedLanguages: (langs) => set({ selectedLanguages: langs }),
+  setTranslationMode: (translationMode) => set({ translationMode }),
   toggleLanguage: (code) =>
     set((s) => ({
       selectedLanguages: s.selectedLanguages.includes(code)

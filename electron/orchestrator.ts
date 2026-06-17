@@ -10,18 +10,12 @@ import {
 } from "./youtube";
 import { translateTitleAndDescription } from "./translator";
 import { translateSRT } from "./subtitles";
-
-type ProgressEvent = {
-  jobId: string;
-  videoId: string;
-  step: "title_description" | "subtitles";
-  status: "running" | "language_done" | "completed" | "failed";
-  done: number;
-  total: number;
-  currentLanguage?: string;
-  durationMs?: number;
-  error?: string;
-};
+import type { ProgressEvent } from "../shared/api";
+import type {
+  Localizations,
+  TitleDescriptionResult,
+  SubtitlesResult,
+} from "../shared/types";
 
 function emit(event: ProgressEvent): void {
   for (const win of BrowserWindow.getAllWindows()) {
@@ -34,7 +28,7 @@ export async function translateTitleDescriptionMulti(
   jobId: string,
   videoId: string,
   targetLanguages: string[],
-): Promise<{ updated: string[]; failed: string[] }> {
+): Promise<TitleDescriptionResult> {
   const startedAt = Date.now();
   const video = await getVideo(account, videoId);
   if (!video) throw new Error(`Video ${videoId} not found`);
@@ -55,10 +49,7 @@ export async function translateTitleDescriptionMulti(
   });
 
   const queue = new PQueue({ concurrency: 3 });
-  const newLocalizations: Record<
-    string,
-    { title: string; description: string }
-  > = {};
+  const newLocalizations: Localizations = {};
 
   await Promise.all(
     targetLanguages.map((lang) =>
@@ -114,7 +105,7 @@ export async function translateSubtitlesMulti(
   jobId: string,
   videoId: string,
   targetLanguages: string[],
-): Promise<{ updated: string[]; failed: string[]; skipped: string[] }> {
+): Promise<SubtitlesResult> {
   const startedAt = Date.now();
   const video = await getVideo(account, videoId);
   if (!video) throw new Error(`Video ${videoId} not found`);

@@ -4,8 +4,7 @@ import { useApp } from "../store";
 import { AppFrame } from "../components/AppFrame";
 import { Avatar } from "../components/Avatar";
 import { api } from "../api";
-
-type Mode = "title_description" | "subtitles" | "select";
+import type { TranslationMode } from "@shared/types";
 
 export function VideoDetailScreen() {
   const { t } = useTranslation();
@@ -14,6 +13,7 @@ export function VideoDetailScreen() {
   const setScreen = useApp((s) => s.setScreen);
   const selectedLanguages = useApp((s) => s.selectedLanguages);
   const setSelectedLanguages = useApp((s) => s.setSelectedLanguages);
+  const setTranslationMode = useApp((s) => s.setTranslationMode);
   const settings = useApp((s) => s.settings);
   const email = useApp((s) => s.email);
 
@@ -34,14 +34,13 @@ export function VideoDetailScreen() {
 
   if (!video) return null;
 
-  function startMode(mode: Mode) {
-    sessionStorage.setItem("pendingMode", mode);
+  function startMode(mode: TranslationMode) {
+    setTranslationMode(mode);
     setScreen("languages");
   }
 
   return (
     <AppFrame
-      topLeft={<div>📊 0</div>}
       topRight={<div className="truncate max-w-[260px]">{email ?? ""}</div>}
     >
       <div className="h-full flex p-6 gap-6">

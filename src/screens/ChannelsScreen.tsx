@@ -4,6 +4,7 @@ import type { AccountError, Channel } from "@shared/types";
 import { useApp } from "../store";
 import { AppFrame } from "../components/AppFrame";
 import { Avatar } from "../components/Avatar";
+import { errorText } from "../lib/errorText";
 import { api } from "../api";
 
 function formatNumber(n: number): string {
@@ -87,7 +88,6 @@ export function ChannelsScreen() {
 
   return (
     <AppFrame
-      topLeft={<div>📊 0</div>}
       topRight={<div className="truncate max-w-[260px]">{email ?? ""}</div>}
     >
       <div className="h-full flex p-6 gap-6">
@@ -100,9 +100,7 @@ export function ChannelsScreen() {
           </h2>
           {loading && <div className="text-center text-sm text-[#a0a0a0]">{t("app.loading")}</div>}
           {error && (
-            <div className="text-sm text-[#e63946] mb-3">
-              {t(`errors.${error}`, { defaultValue: error })}
-            </div>
+            <div className="text-sm text-[#e63946] mb-3">{errorText(t, error)}</div>
           )}
           {accountErrors.map((ae) => (
             <div key={ae.email} className="text-xs text-[#e63946] mb-2">

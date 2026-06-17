@@ -4,6 +4,7 @@ import type { Video } from "@shared/types";
 import { useApp } from "../store";
 import { AppFrame } from "../components/AppFrame";
 import { Avatar } from "../components/Avatar";
+import { errorText } from "../lib/errorText";
 import { api } from "../api";
 
 export function VideosScreen() {
@@ -60,7 +61,6 @@ export function VideosScreen() {
 
   return (
     <AppFrame
-      topLeft={<div>📊 0</div>}
       topRight={<div className="truncate max-w-[260px]">{email ?? ""}</div>}
     >
       <div className="h-full flex p-6 gap-6">
@@ -92,7 +92,7 @@ export function VideosScreen() {
         >
           {error && (
             <div className="text-sm text-[#e63946] mb-3 px-2">
-              {t(`errors.${error}`, { defaultValue: error })}
+              {errorText(t, error)}
             </div>
           )}
           <div className="flex-1 overflow-auto space-y-3">

@@ -7,6 +7,8 @@ import type {
   Caption,
   AccountError,
   AllChannels,
+  Localizations,
+  VideoPage,
 } from "../shared/types";
 import { withCache, invalidate, TTL } from "./cache";
 import log from "electron-log/main";
@@ -73,12 +75,6 @@ export async function listAllChannels(force = false): Promise<AllChannels> {
 
   return { channels, errors };
 }
-
-export type VideoPage = {
-  videos: Video[];
-  nextPageToken: string | null;
-  totalResults: number;
-};
 
 export async function listChannelVideos(
   account: string,
@@ -148,7 +144,7 @@ export async function getVideo(
 }
 
 function toVideo(item: youtube_v3.Schema$Video): Video {
-  const locs: Record<string, { title: string; description: string }> = {};
+  const locs: Localizations = {};
   const rawLocs = (item.localizations ?? {}) as Record<
     string,
     { title?: string | null; description?: string | null }
@@ -178,7 +174,7 @@ function toVideo(item: youtube_v3.Schema$Video): Video {
 export async function updateVideoLocalizations(
   account: string,
   videoId: string,
-  newLocalizations: Record<string, { title: string; description: string }>,
+  newLocalizations: Localizations,
 ): Promise<Video> {
   const client = await yt(account);
   const existing = await client.videos.list({
@@ -188,7 +184,7 @@ export async function updateVideoLocalizations(
   const item = existing.data.items?.[0];
   if (!item) throw new Error(`Video ${videoId} not found`);
 
-  const existingLocs: Record<string, { title: string; description: string }> = {};
+  const existingLocs: Localizations = {};
   const rawLocs = (item.localizations ?? {}) as Record<
     string,
     { title?: string | null; description?: string | null }
@@ -199,10 +195,7 @@ export async function updateVideoLocalizations(
       description: value.description ?? "",
     };
   }
-  const mergedLocalizations: Record<
-    string,
-    { title: string; description: string }
-  > = {
+  const mergedLocalizations: Localizations = {
     ...existingLocs,
     ...newLocalizations,
   };

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useApp } from "../store";
 import { AppFrame } from "../components/AppFrame";
 import { findLanguage } from "@shared/languages";
+import { errorText } from "../lib/errorText";
 import { api } from "../api";
 
 function formatElapsed(ms: number): string {
@@ -48,7 +49,7 @@ export function TranslateProgressScreen() {
       : t("progress.translateSubs");
 
   return (
-    <AppFrame topLeft={<div>📊 0</div>}>
+    <AppFrame>
       <div className="h-full flex flex-col items-center justify-center p-8 gap-6">
         <h1 className="text-2xl font-semibold">{t("progress.title")}</h1>
         <div className="w-full max-w-2xl grid grid-cols-2 gap-8">
@@ -92,7 +93,7 @@ export function TranslateProgressScreen() {
             )}
             {progress.status === "failed" && progress.error && (
               <div className="text-sm text-[#e63946] mt-1">
-                {t(`errors.${progress.error}`, { defaultValue: progress.error })}
+                {errorText(t, progress.error)}
               </div>
             )}
           </Step>
