@@ -24,6 +24,13 @@
     "howToGetThem": "Як їх отримати",
     "save": "Зберегти облікові дані",
     "defaults": "Мови за замовчуванням",
+    "glossary": "Глосарій / не перекладати",
+    "glossaryHint": "Застосовується до всіх перекладів. Залиште переклад порожнім, щоб термін лишався як є, або вкажіть фіксований варіант.",
+    "glossaryTerm": "Термін",
+    "glossaryTranslation": "Переклад (необов'язково)",
+    "glossaryAdd": "Додати термін",
+    "glossarySave": "Зберегти глосарій",
+    "glossarySaved": "Глосарій збережено",
     "signOut": "Вийти"
   },
   "login": {
@@ -58,6 +65,8 @@
     "selectedLangs": "Вибрані мови: {{count}}",
     "pickLanguages": "Вибрати мови",
     "viewLocalizations": "Перегляд / редагування перекладів",
+    "sourceLanguage": "Мова оригіналу",
+    "sourceAuto": "Автовизначення",
     "translateTitleDescription": "Перекласти назву та опис",
     "translateSubtitles": "Перекласти субтитри",
     "noSourceCaptions": "У цього відео немає доріжки субтитрів для перекладу. Додайте субтитри в YouTube Studio.",

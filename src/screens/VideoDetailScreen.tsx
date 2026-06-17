@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useApp } from "../store";
 import { AppFrame } from "../components/AppFrame";
 import { Avatar } from "../components/Avatar";
+import { LANGUAGES } from "@shared/languages";
 import { api } from "../api";
 import type { TranslationMode } from "@shared/types";
 
@@ -14,6 +15,8 @@ export function VideoDetailScreen() {
   const selectedLanguages = useApp((s) => s.selectedLanguages);
   const setSelectedLanguages = useApp((s) => s.setSelectedLanguages);
   const setTranslationMode = useApp((s) => s.setTranslationMode);
+  const sourceLanguage = useApp((s) => s.sourceLanguage);
+  const setSourceLanguage = useApp((s) => s.setSourceLanguage);
   const settings = useApp((s) => s.settings);
   const email = useApp((s) => s.email);
 
@@ -78,6 +81,21 @@ export function VideoDetailScreen() {
           >
             {t("video.pickLanguages")}
           </button>
+          <label className="block text-xs text-[#a0a0a0] mb-1 self-stretch">
+            {t("video.sourceLanguage")}
+          </label>
+          <select
+            value={sourceLanguage ?? ""}
+            onChange={(e) => setSourceLanguage(e.target.value || null)}
+            className="w-full mb-3 px-2 py-1.5 rounded-md bg-[#181818] border border-[#3a3a3a] text-sm"
+          >
+            <option value="">{t("video.sourceAuto")}</option>
+            {LANGUAGES.map((l) => (
+              <option key={l.code} value={l.code}>
+                {l.name}
+              </option>
+            ))}
+          </select>
           <button
             onClick={() => startMode("title_description")}
             className="outlined-btn w-full mb-2"

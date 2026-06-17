@@ -93,6 +93,12 @@ export type TranslationJob = {
   error: string | null;
 };
 
+/**
+ * A glossary term. An empty `translation` means "keep verbatim" (do not
+ * translate); a non-empty one means "always render the term this way".
+ */
+export type GlossaryEntry = { term: string; translation: string };
+
 export type Settings = {
   uiLanguage: "en" | "de" | "fr" | "uk" | "ru";
   defaultLanguages: string[];
@@ -100,6 +106,8 @@ export type Settings = {
   googleClientSecret: string | null;
   /** Connected Google accounts (non-secret). Refresh tokens live in keytar. */
   accounts: Account[];
+  /** Brand terms applied to every translation (verbatim or fixed rendering). */
+  glossary: GlossaryEntry[];
 };
 
 export type SubtitleCue = {

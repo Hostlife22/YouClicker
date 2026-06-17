@@ -65,12 +65,14 @@ export type Api = {
       jobId: string,
       videoId: string,
       languages: string[],
+      sourceLanguage?: string | null,
     ) => Promise<TitleDescriptionResult>;
     subtitles: (
       account: string,
       jobId: string,
       videoId: string,
       languages: string[],
+      sourceLanguage?: string | null,
     ) => Promise<SubtitlesResult>;
     onProgress: (cb: (e: ProgressEvent) => void) => () => void;
   };

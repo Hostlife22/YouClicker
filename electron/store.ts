@@ -7,6 +7,7 @@ const DEFAULTS: Settings = {
   googleClientId: null,
   googleClientSecret: null,
   accounts: [],
+  glossary: [],
 };
 
 const store = new Store<Settings>({
@@ -25,6 +26,17 @@ const store = new Store<Settings>({
         required: ["email"],
       },
     },
+    glossary: {
+      type: "array",
+      items: {
+        type: "object",
+        properties: {
+          term: { type: "string" },
+          translation: { type: "string" },
+        },
+        required: ["term", "translation"],
+      },
+    },
   },
 });
 
@@ -35,6 +47,7 @@ export function getSettings(): Settings {
     googleClientId: store.get("googleClientId"),
     googleClientSecret: store.get("googleClientSecret"),
     accounts: store.get("accounts"),
+    glossary: store.get("glossary"),
   };
 }
 

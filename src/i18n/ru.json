@@ -24,6 +24,13 @@
     "howToGetThem": "Как их получить",
     "save": "Сохранить",
     "defaults": "Языки по умолчанию",
+    "glossary": "Глоссарий / не переводить",
+    "glossaryHint": "Применяется ко всем переводам. Оставьте перевод пустым, чтобы термин оставался как есть, или укажите фиксированный вариант.",
+    "glossaryTerm": "Термин",
+    "glossaryTranslation": "Перевод (необязательно)",
+    "glossaryAdd": "Добавить термин",
+    "glossarySave": "Сохранить глоссарий",
+    "glossarySaved": "Глоссарий сохранён",
     "signOut": "Выйти"
   },
   "login": {
@@ -58,6 +65,8 @@
     "selectedLangs": "Выбранные языки: {{count}}",
     "pickLanguages": "Выбрать языки",
     "viewLocalizations": "Просмотр / редактирование переводов",
+    "sourceLanguage": "Исходный язык",
+    "sourceAuto": "Автоопределение",
     "translateTitleDescription": "Перевести название и описание",
     "translateSubtitles": "Перевести субтитры",
     "noSourceCaptions": "У видео нет дорожки субтитров. Добавьте субтитры в YouTube Studio.",

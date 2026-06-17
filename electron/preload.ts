@@ -65,15 +65,31 @@ const api: Api = {
       jobId: string,
       videoId: string,
       languages: string[],
+      sourceLanguage: string | null = null,
     ): Promise<TitleDescriptionResult> =>
-      ipcRenderer.invoke("translate:titleDescription", account, jobId, videoId, languages),
+      ipcRenderer.invoke(
+        "translate:titleDescription",
+        account,
+        jobId,
+        videoId,
+        languages,
+        sourceLanguage,
+      ),
     subtitles: (
       account: string,
       jobId: string,
       videoId: string,
       languages: string[],
+      sourceLanguage: string | null = null,
     ): Promise<SubtitlesResult> =>
-      ipcRenderer.invoke("translate:subtitles", account, jobId, videoId, languages),
+      ipcRenderer.invoke(
+        "translate:subtitles",
+        account,
+        jobId,
+        videoId,
+        languages,
+        sourceLanguage,
+      ),
     onProgress: (cb: (e: ProgressEvent) => void): (() => void) => {
       const listener = (_: unknown, payload: ProgressEvent) => cb(payload);
       ipcRenderer.on("translation:progress", listener);

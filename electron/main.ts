@@ -29,6 +29,7 @@ import {
   settingsPatchSchema,
   languageCodes,
   localizationsSchema,
+  sourceLanguage as sourceLanguageSchema,
   nonEmptyString,
   parseOrThrow,
 } from "./validation";
@@ -129,22 +130,24 @@ function registerIpc(): void {
 
   ipcMain.handle(
     "translate:titleDescription",
-    (_e, account: string, jobId: string, videoId: string, languages: string[]) =>
+    (_e, account: string, jobId: string, videoId: string, languages: string[], source: unknown) =>
       translateTitleDescriptionMulti(
         parseOrThrow(nonEmptyString, account, "INVALID_ACCOUNT"),
         jobId,
         parseOrThrow(nonEmptyString, videoId, "INVALID_VIDEO_ID"),
         parseOrThrow(languageCodes, languages, "NO_LANGUAGES_SELECTED"),
+        parseOrThrow(sourceLanguageSchema, source ?? null, "INVALID_LANGUAGE"),
       ),
   );
   ipcMain.handle(
     "translate:subtitles",
-    (_e, account: string, jobId: string, videoId: string, languages: string[]) =>
+    (_e, account: string, jobId: string, videoId: string, languages: string[], source: unknown) =>
       translateSubtitlesMulti(
         parseOrThrow(nonEmptyString, account, "INVALID_ACCOUNT"),
         jobId,
         parseOrThrow(nonEmptyString, videoId, "INVALID_VIDEO_ID"),
         parseOrThrow(languageCodes, languages, "NO_LANGUAGES_SELECTED"),
+        parseOrThrow(sourceLanguageSchema, source ?? null, "INVALID_LANGUAGE"),
       ),
   );
 

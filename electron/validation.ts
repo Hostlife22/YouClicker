@@ -26,6 +26,10 @@ export const localizationsSchema = z.record(
 
 const UI_LANGUAGE = z.enum(["en", "de", "fr", "uk", "ru"]);
 
+export const glossarySchema = z.array(
+  z.object({ term: z.string(), translation: z.string() }),
+);
+
 export const settingsPatchSchema = z
   .object({
     uiLanguage: UI_LANGUAGE,
@@ -33,11 +37,14 @@ export const settingsPatchSchema = z
     googleClientId: z.string().nullable(),
     googleClientSecret: z.string().nullable(),
     accounts: z.array(z.object({ email: z.string() })),
+    glossary: glossarySchema,
   })
   .partial();
 
 export const nonEmptyString = z.string().min(1);
 export const languageCodes = z.array(z.string().min(1)).min(1);
+/** Source-language override: a language code, or null to auto-detect. */
+export const sourceLanguage = z.string().min(1).nullable();
 
 /** Parse with a schema or throw a stable, typed boundary error. */
 export function parseOrThrow<T>(schema: z.ZodType<T>, value: unknown, code: string): T {

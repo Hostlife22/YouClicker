@@ -24,6 +24,13 @@
     "howToGetThem": "How to obtain these",
     "save": "Save credentials",
     "defaults": "Default languages",
+    "glossary": "Glossary / do-not-translate",
+    "glossaryHint": "Applied to every translation. Leave the translation empty to keep a term verbatim, or set it to force a fixed rendering.",
+    "glossaryTerm": "Term",
+    "glossaryTranslation": "Translation (optional)",
+    "glossaryAdd": "Add term",
+    "glossarySave": "Save glossary",
+    "glossarySaved": "Glossary saved",
     "signOut": "Sign out"
   },
   "login": {
@@ -58,6 +65,8 @@
     "selectedLangs": "Selected languages: {{count}}",
     "pickLanguages": "Pick languages",
     "viewLocalizations": "View / edit translations",
+    "sourceLanguage": "Source language",
+    "sourceAuto": "Auto-detect",
     "translateTitleDescription": "Translate title and description",
     "translateSubtitles": "Translate subtitles",
     "noSourceCaptions": "This video has no caption track to translate from. Add subtitles in YouTube Studio first.",

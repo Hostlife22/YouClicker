@@ -53,6 +53,8 @@ type AppState = {
   selectedAccountId: string | null;
   selectedVideo: Video | null;
   selectedLanguages: string[];
+  /** Source-language override for the next job; null = auto-detect. */
+  sourceLanguage: string | null;
   translationMode: TranslationMode | null;
   videosByChannel: Record<string, VideoCacheEntry>;
   progress: ProgressState;
@@ -63,6 +65,7 @@ type AppState = {
   setChannels: (c: Channel[]) => void;
   selectChannel: (id: string, accountId: string) => void;
   selectVideo: (v: Video | null) => void;
+  setSourceLanguage: (code: string | null) => void;
   setChannelVideos: (channelId: string, entry: VideoCacheEntry) => void;
   clearChannelVideos: (channelId: string) => void;
   setSelectedLanguages: (langs: string[]) => void;
@@ -101,6 +104,7 @@ export const useApp = create<AppState>((set) => ({
   selectedAccountId: null,
   selectedVideo: null,
   selectedLanguages: [],
+  sourceLanguage: null,
   translationMode: null,
   videosByChannel: {},
   progress: emptyProgress,
@@ -111,7 +115,8 @@ export const useApp = create<AppState>((set) => ({
   setChannels: (channels) => set({ channels }),
   selectChannel: (id, accountId) =>
     set({ selectedChannelId: id, selectedAccountId: accountId }),
-  selectVideo: (v) => set({ selectedVideo: v }),
+  selectVideo: (v) => set({ selectedVideo: v, sourceLanguage: null }),
+  setSourceLanguage: (sourceLanguage) => set({ sourceLanguage }),
   setChannelVideos: (channelId, entry) =>
     set((s) => ({
       videosByChannel: { ...s.videosByChannel, [channelId]: entry },

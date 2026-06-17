@@ -29,11 +29,13 @@ export async function translateTitleDescriptionMulti(
   jobId: string,
   videoId: string,
   targetLanguages: string[],
+  sourceLanguageOverride: string | null = null,
 ): Promise<TitleDescriptionResult> {
   const startedAt = Date.now();
   const video = await getVideo(account, videoId);
   if (!video) throw new Error(`Video ${videoId} not found`);
-  const sourceLang = video.defaultLanguage ?? video.defaultAudioLanguage ?? null;
+  const sourceLang =
+    sourceLanguageOverride ?? video.defaultLanguage ?? video.defaultAudioLanguage ?? null;
 
   recordJobStart({
     id: jobId,
@@ -121,11 +123,13 @@ export async function translateSubtitlesMulti(
   jobId: string,
   videoId: string,
   targetLanguages: string[],
+  sourceLanguageOverride: string | null = null,
 ): Promise<SubtitlesResult> {
   const startedAt = Date.now();
   const video = await getVideo(account, videoId);
   if (!video) throw new Error(`Video ${videoId} not found`);
-  const sourceLang = video.defaultLanguage ?? video.defaultAudioLanguage ?? null;
+  const sourceLang =
+    sourceLanguageOverride ?? video.defaultLanguage ?? video.defaultAudioLanguage ?? null;
 
   recordJobStart({
     id: jobId,

@@ -19,6 +19,7 @@ export function LanguagesScreen() {
   const finishJob = useApp((s) => s.finishJob);
   const video = useApp((s) => s.selectedVideo);
   const accountId = useApp((s) => s.selectedAccountId);
+  const sourceLanguage = useApp((s) => s.sourceLanguage);
   const selectVideo = useApp((s) => s.selectVideo);
   const clearChannelVideos = useApp((s) => s.clearChannelVideos);
   const mode = useApp((s) => s.translationMode) ?? "title_description";
@@ -68,8 +69,20 @@ export function LanguagesScreen() {
     try {
       const result =
         mode === "title_description"
-          ? await api().translate.titleDescription(accountId, jobId, video.id, selected)
-          : await api().translate.subtitles(accountId, jobId, video.id, selected);
+          ? await api().translate.titleDescription(
+              accountId,
+              jobId,
+              video.id,
+              selected,
+              sourceLanguage,
+            )
+          : await api().translate.subtitles(
+              accountId,
+              jobId,
+              video.id,
+              selected,
+              sourceLanguage,
+            );
       finishJob("completed", { result });
       // The job mutated server-side localizations/captions; the main-process
       // cache was already invalidated. Refresh the renderer's copies so the

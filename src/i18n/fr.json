@@ -24,6 +24,13 @@
     "howToGetThem": "Comment les obtenir",
     "save": "Enregistrer les identifiants",
     "defaults": "Langues par défaut",
+    "glossary": "Glossaire / ne pas traduire",
+    "glossaryHint": "Appliqué à chaque traduction. Laissez la traduction vide pour garder un terme tel quel, ou définissez-la pour imposer un rendu fixe.",
+    "glossaryTerm": "Terme",
+    "glossaryTranslation": "Traduction (facultatif)",
+    "glossaryAdd": "Ajouter un terme",
+    "glossarySave": "Enregistrer le glossaire",
+    "glossarySaved": "Glossaire enregistré",
     "signOut": "Se déconnecter"
   },
   "login": {
@@ -58,6 +65,8 @@
     "selectedLangs": "Langues sélectionnées : {{count}}",
     "pickLanguages": "Choisir les langues",
     "viewLocalizations": "Voir / modifier les traductions",
+    "sourceLanguage": "Langue source",
+    "sourceAuto": "Détection automatique",
     "translateTitleDescription": "Traduire le titre et la description",
     "translateSubtitles": "Traduire les sous-titres",
     "noSourceCaptions": "Cette vidéo n'a pas de piste de sous-titres à traduire. Ajoutez-les d'abord dans YouTube Studio.",

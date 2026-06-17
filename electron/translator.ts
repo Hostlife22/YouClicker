@@ -4,7 +4,14 @@ import type { Localization } from "../shared/types";
 import { stripJsonFences } from "./json";
 import { titleDescriptionSchema, cueBatchSchema } from "./validation";
 import { withRetry } from "./retry";
+import { buildGlossaryInstruction } from "./glossary";
+import { getSettings } from "./store";
 import log from "electron-log/main";
+
+/** Current glossary clause from settings, appended to translation prompts. */
+function glossaryClause(): string {
+  return buildGlossaryInstruction(getSettings().glossary ?? []);
+}
 
 type AssistantContentBlock = { type: string; text?: string };
 
@@ -63,7 +70,7 @@ export async function translateText(
 <source>
 ${text}
 </source>`;
-  const result = await runClaude(prompt, TRANSLATE_SYSTEM);
+  const result = await runClaude(prompt, TRANSLATE_SYSTEM + glossaryClause());
   return result;
 }
 
@@ -77,7 +84,7 @@ export async function translateTitleAndDescription(
   const system = `${TRANSLATE_SYSTEM}
 
 You must respond with valid JSON only. No prose, no markdown fences. Schema:
-{"title": "<translated title>", "description": "<translated description>"}`;
+{"title": "<translated title>", "description": "<translated description>"}${glossaryClause()}`;
 
   const prompt = `Translate the YouTube video title and description from ${sourceLabel} into ${languageLabel(targetLang)} (${targetLang}).
 
@@ -140,7 +147,7 @@ export async function translateCueBatch(
 
 ${payload}`;
 
-  const raw = await runClaude(prompt, CUE_SYSTEM);
+  const raw = await runClaude(prompt, CUE_SYSTEM + glossaryClause());
   const cleaned = stripJsonFences(raw);
   const parsed = cueBatchSchema.safeParse(safeJsonParse(cleaned));
   if (!parsed.success) {

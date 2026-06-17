@@ -24,6 +24,13 @@
     "howToGetThem": "So erhalten Sie diese",
     "save": "Anmeldedaten speichern",
     "defaults": "Standardsprachen",
+    "glossary": "Glossar / nicht übersetzen",
+    "glossaryHint": "Gilt für jede Übersetzung. Lassen Sie die Übersetzung leer, um einen Begriff unverändert zu lassen, oder geben Sie eine feste Schreibweise vor.",
+    "glossaryTerm": "Begriff",
+    "glossaryTranslation": "Übersetzung (optional)",
+    "glossaryAdd": "Begriff hinzufügen",
+    "glossarySave": "Glossar speichern",
+    "glossarySaved": "Glossar gespeichert",
     "signOut": "Abmelden"
   },
   "login": {
@@ -58,6 +65,8 @@
     "selectedLangs": "Ausgewählte Sprachen: {{count}}",
     "pickLanguages": "Sprachen wählen",
     "viewLocalizations": "Übersetzungen ansehen / bearbeiten",
+    "sourceLanguage": "Ausgangssprache",
+    "sourceAuto": "Automatisch erkennen",
     "translateTitleDescription": "Titel und Beschreibung übersetzen",
     "translateSubtitles": "Untertitel übersetzen",
     "noSourceCaptions": "Dieses Video hat keine Untertitelspur zum Übersetzen. Fügen Sie zuerst Untertitel in YouTube Studio hinzu.",
