@@ -101,6 +101,11 @@
   "footer": {
     "support": "Support Group"
   },
+  "update": {
+    "title": "Update available",
+    "message": "Version {{version}} is available — you have {{current}}. Open the download page?",
+    "download": "Open downloads"
+  },
   "dialogs": {
     "aboutTitle": "About",
     "aboutBody": "YouClicker Personal v1.0.0",

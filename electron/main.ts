@@ -24,6 +24,7 @@ import {
   translateSubtitlesMulti,
 } from "./orchestrator";
 import { listJobs, clearJobs } from "./jobs";
+import { checkForUpdate } from "./updates";
 import { suppressDevToolsNoise } from "./devtools-noise";
 import {
   settingsPatchSchema,
@@ -155,6 +156,7 @@ function registerIpc(): void {
   ipcMain.handle("jobs:clear", () => clearJobs());
 
   ipcMain.handle("system:openExternal", (_e, url: string) => shell.openExternal(url));
+  ipcMain.handle("system:checkForUpdate", () => checkForUpdate());
 }
 
 app.whenReady().then(async () => {

@@ -20,7 +20,7 @@ export default defineConfig({
     include: ["test/**/*.test.ts"],
     coverage: {
       provider: "v8",
-      include: ["electron/srt.ts", "electron/json.ts", "electron/retry.ts", "electron/validation.ts", "electron/jobsLogic.ts", "electron/glossary.ts", "shared/quota.ts"],
+      include: ["electron/srt.ts", "electron/json.ts", "electron/retry.ts", "electron/validation.ts", "electron/jobsLogic.ts", "electron/glossary.ts", "electron/version.ts", "shared/quota.ts"],
     },
   },
 });

@@ -10,6 +10,7 @@ import type {
   SubtitlesResult,
   TranslationJob,
   Localizations,
+  UpdateInfo,
 } from "../shared/types";
 import type { Api, ProgressEvent } from "../shared/api";
 
@@ -103,6 +104,8 @@ const api: Api = {
   system: {
     openExternal: (url: string): Promise<void> =>
       ipcRenderer.invoke("system:openExternal", url),
+    checkForUpdate: (): Promise<UpdateInfo | null> =>
+      ipcRenderer.invoke("system:checkForUpdate"),
   },
 };
 

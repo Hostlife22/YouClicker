@@ -101,6 +101,11 @@
   "footer": {
     "support": "Группа поддержки"
   },
+  "update": {
+    "title": "Доступно обновление",
+    "message": "Доступна версия {{version}} — у вас {{current}}. Открыть страницу загрузки?",
+    "download": "Открыть загрузки"
+  },
   "dialogs": {
     "aboutTitle": "О программе",
     "aboutBody": "YouClicker Personal v1.0.0",

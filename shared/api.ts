@@ -11,6 +11,7 @@ import type {
   SubtitlesResult,
   TranslationJob,
   Localizations,
+  UpdateInfo,
 } from "./types";
 
 export type ProgressEvent = {
@@ -82,5 +83,7 @@ export type Api = {
   };
   system: {
     openExternal: (url: string) => Promise<void>;
+    /** Check GitHub for a newer release; null if the check fails. */
+    checkForUpdate: () => Promise<UpdateInfo | null>;
   };
 };

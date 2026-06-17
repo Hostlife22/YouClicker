@@ -116,3 +116,11 @@ export type SubtitleCue = {
   endMs: number;
   text: string;
 };
+
+/** Result of the lightweight GitHub-release update check. */
+export type UpdateInfo = {
+  currentVersion: string;
+  latestVersion: string;
+  url: string;
+  updateAvailable: boolean;
+};
