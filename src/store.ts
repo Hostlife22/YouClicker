@@ -18,6 +18,12 @@ export type Screen =
   | "languages"
   | "progress";
 
+type TranslationResult = {
+  updated: string[];
+  failed: string[];
+  skipped?: string[];
+};
+
 type ProgressState = {
   jobId: string | null;
   videoId: string | null;
@@ -29,6 +35,7 @@ type ProgressState = {
   startedAt: number | null;
   finishedAt: number | null;
   error: string | null;
+  result: TranslationResult | null;
 };
 
 type VideoCacheEntry = { videos: Video[]; pageToken: string | null };
@@ -61,7 +68,10 @@ type AppState = {
   setTranslationMode: (mode: TranslationMode | null) => void;
   startJob: (jobId: string, videoId: string, step: TranslationStep, total: number) => void;
   updateProgress: (done: number, currentLanguage: string | null) => void;
-  finishJob: (status: "completed" | "failed", error?: string) => void;
+  finishJob: (
+    status: "completed" | "failed",
+    opts?: { error?: string; result?: TranslationResult },
+  ) => void;
 };
 
 const emptyProgress: ProgressState = {
@@ -75,6 +85,7 @@ const emptyProgress: ProgressState = {
   startedAt: null,
   finishedAt: null,
   error: null,
+  result: null,
 };
 
 export const useApp = create<AppState>((set) => ({
@@ -129,17 +140,19 @@ export const useApp = create<AppState>((set) => ({
         startedAt: Date.now(),
         finishedAt: null,
         error: null,
+        result: null,
       },
     }),
   updateProgress: (done, currentLanguage) =>
     set((s) => ({ progress: { ...s.progress, done, currentLanguage } })),
-  finishJob: (status, error) =>
+  finishJob: (status, opts) =>
     set((s) => ({
       progress: {
         ...s.progress,
         status,
         finishedAt: Date.now(),
-        error: error ?? null,
+        error: opts?.error ?? null,
+        result: opts?.result ?? s.progress.result,
       },
     })),
 }));
