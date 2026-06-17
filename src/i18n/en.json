@@ -1,0 +1,96 @@
+{
+  "app": {
+    "title": "YouClicker Personal",
+    "supportGroup": "Support Group",
+    "back": "Back",
+    "start": "Start",
+    "next": "Next",
+    "ok": "Ok",
+    "cancel": "Cancel",
+    "save": "Save",
+    "loading": "Loading...",
+    "error": "Error"
+  },
+  "welcome": {
+    "title": "Welcome to YouClicker",
+    "selectLanguage": "Select the application language",
+    "continue": "Get started"
+  },
+  "settings": {
+    "title": "Settings",
+    "googleOAuth": "Google OAuth credentials",
+    "clientId": "OAuth Client ID",
+    "clientSecret": "OAuth Client Secret",
+    "howToGetThem": "How to obtain these",
+    "save": "Save credentials",
+    "defaults": "Default languages",
+    "signOut": "Sign out"
+  },
+  "login": {
+    "promptCredentials": "First enter your Google Cloud OAuth credentials in Settings.",
+    "openSettings": "Open settings",
+    "title": "Sign in with Google to start working",
+    "signInGoogle": "Sign in with Google",
+    "newAccount": "New account",
+    "rememberPassword": "Remember password",
+    "restorePassword": "Restore password"
+  },
+  "channels": {
+    "title": "My Channels",
+    "addChannel": "Add channel",
+    "remove": "Remove account",
+    "confirmRemove": "Remove account {{account}} and all its channels?",
+    "videos": "Videos",
+    "views": "Views",
+    "subscribers": "Subscribers",
+    "empty": "No channels found. Sign in with Google to load yours.",
+    "developedWith": "Developed with"
+  },
+  "videos": {
+    "title": "Videos",
+    "published": "Published",
+    "loadMore": "Load more",
+    "refresh": "Refresh",
+    "empty": "This channel has no public videos.",
+    "loading": "Loading videos..."
+  },
+  "video": {
+    "selectedLangs": "Selected languages: {{count}}",
+    "pickLanguages": "Pick languages",
+    "translateTitleDescription": "Translate title and description",
+    "translateSubtitles": "Translate subtitles",
+    "noSourceCaptions": "This video has no caption track to translate from. Add subtitles in YouTube Studio first.",
+    "title": "Title:",
+    "description": "Description:"
+  },
+  "languages": {
+    "title": "Choose target languages",
+    "selectAll": "Select all",
+    "invert": "Invert",
+    "loadDefault": "Load defaults",
+    "saveDefault": "Save defaults",
+    "selectedCount": "{{count}} selected"
+  },
+  "progress": {
+    "title": "We translate fast",
+    "selectVideo": "Selected video",
+    "selectLanguages": "Selected languages",
+    "completeStep": "Finishing translation",
+    "successTitle": "Completed successfully!",
+    "step": "Step {{n}}",
+    "current": "Translating {{lang}}...",
+    "elapsed": "Elapsed",
+    "translateTitleDesc": "Translate title and description",
+    "translateSubs": "Translate subtitles"
+  },
+  "footer": {
+    "support": "Support Group"
+  },
+  "errors": {
+    "MISSING_OAUTH_CREDENTIALS": "Google OAuth credentials are not set. Open Settings and add Client ID + Secret.",
+    "NOT_AUTHENTICATED": "You are not signed in. Sign in with Google first.",
+    "NO_SOURCE_CAPTIONS": "Video has no captions to translate from.",
+    "ACCOUNT_REAUTH_NEEDED": "Session expired — sign in again.",
+    "generic": "Something went wrong: {{message}}"
+  }
+}

@@ -1,0 +1,96 @@
+{
+  "app": {
+    "title": "YouClicker Personal",
+    "supportGroup": "Група підтримки",
+    "back": "Назад",
+    "start": "Почати",
+    "next": "Далі",
+    "ok": "Ok",
+    "cancel": "Скасувати",
+    "save": "Зберегти",
+    "loading": "Завантаження...",
+    "error": "Помилка"
+  },
+  "welcome": {
+    "title": "Ласкаво просимо до YouClicker",
+    "selectLanguage": "Виберіть мову програми",
+    "continue": "Почати"
+  },
+  "settings": {
+    "title": "Налаштування",
+    "googleOAuth": "Облікові дані Google OAuth",
+    "clientId": "OAuth Client ID",
+    "clientSecret": "OAuth Client Secret",
+    "howToGetThem": "Як їх отримати",
+    "save": "Зберегти облікові дані",
+    "defaults": "Мови за замовчуванням",
+    "signOut": "Вийти"
+  },
+  "login": {
+    "promptCredentials": "Спочатку введіть ваші облікові дані Google OAuth у налаштуваннях.",
+    "openSettings": "Відкрити налаштування",
+    "title": "Увійдіть через Google, щоб почати роботу",
+    "signInGoogle": "Увійти через Google",
+    "newAccount": "Новий обліковий запис",
+    "rememberPassword": "Запам'ятати пароль",
+    "restorePassword": "Відновити пароль"
+  },
+  "channels": {
+    "title": "Мої канали",
+    "addChannel": "Додати канал",
+    "remove": "Видалити акаунт",
+    "confirmRemove": "Видалити акаунт {{account}} і всі його канали?",
+    "videos": "Відео",
+    "views": "Перегляди",
+    "subscribers": "Підписники",
+    "empty": "Канали не знайдено. Увійдіть через Google.",
+    "developedWith": "Розроблено з"
+  },
+  "videos": {
+    "title": "Відео",
+    "published": "Опубліковано",
+    "loadMore": "Завантажити ще",
+    "refresh": "Оновити",
+    "empty": "У каналу немає публічних відео.",
+    "loading": "Завантаження відео..."
+  },
+  "video": {
+    "selectedLangs": "Вибрані мови: {{count}}",
+    "pickLanguages": "Вибрати мови",
+    "translateTitleDescription": "Перекласти назву та опис",
+    "translateSubtitles": "Перекласти субтитри",
+    "noSourceCaptions": "У цього відео немає доріжки субтитрів для перекладу. Додайте субтитри в YouTube Studio.",
+    "title": "Назва:",
+    "description": "Опис:"
+  },
+  "languages": {
+    "title": "Виберіть цільові мови",
+    "selectAll": "Вибрати всі",
+    "invert": "Інвертувати",
+    "loadDefault": "Завантажити за замовчуванням",
+    "saveDefault": "Зберегти за замовчуванням",
+    "selectedCount": "Вибрано: {{count}}"
+  },
+  "progress": {
+    "title": "Ми перекладаємо швидко",
+    "selectVideo": "Вибране відео",
+    "selectLanguages": "Вибрані мови",
+    "completeStep": "Завершити переклад",
+    "successTitle": "Завершено успішно!",
+    "step": "Крок {{n}}",
+    "current": "Перекладаємо {{lang}}...",
+    "elapsed": "Минуло",
+    "translateTitleDesc": "Перекласти назву та опис",
+    "translateSubs": "Перекласти субтитри"
+  },
+  "footer": {
+    "support": "Група підтримки"
+  },
+  "errors": {
+    "MISSING_OAUTH_CREDENTIALS": "Облікові дані Google OAuth не налаштовані. Відкрийте налаштування та додайте Client ID + Secret.",
+    "NOT_AUTHENTICATED": "Ви не увійшли в систему. Спочатку увійдіть через Google.",
+    "NO_SOURCE_CAPTIONS": "У відео немає субтитрів для перекладу.",
+    "ACCOUNT_REAUTH_NEEDED": "Сесія завершилась — увійдіть знову.",
+    "generic": "Щось пішло не так: {{message}}"
+  }
+}

@@ -1,0 +1,96 @@
+{
+  "app": {
+    "title": "YouClicker Personal",
+    "supportGroup": "Группа поддержки",
+    "back": "Назад",
+    "start": "Для начала",
+    "next": "Далее",
+    "ok": "Ok",
+    "cancel": "Отмена",
+    "save": "Сохранить",
+    "loading": "Загрузка...",
+    "error": "Ошибка"
+  },
+  "welcome": {
+    "title": "Добро пожаловать на YouClicker",
+    "selectLanguage": "Выберите язык приложения",
+    "continue": "Для начала"
+  },
+  "settings": {
+    "title": "Настройки",
+    "googleOAuth": "Учётные данные Google OAuth",
+    "clientId": "OAuth Client ID",
+    "clientSecret": "OAuth Client Secret",
+    "howToGetThem": "Как их получить",
+    "save": "Сохранить",
+    "defaults": "Языки по умолчанию",
+    "signOut": "Выйти"
+  },
+  "login": {
+    "promptCredentials": "Сначала введите ваши Google OAuth учётные данные в настройках.",
+    "openSettings": "Открыть настройки",
+    "title": "Войдите через Google для работы с программой",
+    "signInGoogle": "Войти через Google",
+    "newAccount": "Новая учётная запись",
+    "rememberPassword": "Запомнить пароль",
+    "restorePassword": "Восстановить пароль"
+  },
+  "channels": {
+    "title": "Мои каналы",
+    "addChannel": "Добавить канал",
+    "remove": "Удалить аккаунт",
+    "confirmRemove": "Удалить аккаунт {{account}} и все его каналы?",
+    "videos": "Videos",
+    "views": "Views",
+    "subscribers": "Subscribers",
+    "empty": "Каналы не найдены. Войдите через Google.",
+    "developedWith": "Developed with"
+  },
+  "videos": {
+    "title": "Видео",
+    "published": "Опубликовано",
+    "loadMore": "Загрузить ещё",
+    "refresh": "Обновить",
+    "empty": "У канала нет публичных видео.",
+    "loading": "Загрузка видео..."
+  },
+  "video": {
+    "selectedLangs": "Выбранные языки: {{count}}",
+    "pickLanguages": "Выбрать языки",
+    "translateTitleDescription": "Перевести название и описание",
+    "translateSubtitles": "Перевести субтитры",
+    "noSourceCaptions": "У видео нет дорожки субтитров. Добавьте субтитры в YouTube Studio.",
+    "title": "Название:",
+    "description": "Описание:"
+  },
+  "languages": {
+    "title": "Выберите нужные языки",
+    "selectAll": "Выбрать все",
+    "invert": "Инвертировать",
+    "loadDefault": "Загрузить значение по умолчанию",
+    "saveDefault": "Сохранить значение по умолчанию",
+    "selectedCount": "Выбрано: {{count}}"
+  },
+  "progress": {
+    "title": "Мы переводим быстро",
+    "selectVideo": "Выберите видео",
+    "selectLanguages": "Выберите нужные языки",
+    "completeStep": "Завершить перевод",
+    "successTitle": "Завершено успешно!",
+    "step": "Шаг {{n}}",
+    "current": "Перевод {{lang}}...",
+    "elapsed": "Прошло",
+    "translateTitleDesc": "Перевести название и описание",
+    "translateSubs": "Перевести субтитры"
+  },
+  "footer": {
+    "support": "Группа поддержки"
+  },
+  "errors": {
+    "MISSING_OAUTH_CREDENTIALS": "Google OAuth данные не настроены. Откройте настройки и добавьте Client ID + Secret.",
+    "NOT_AUTHENTICATED": "Вы не вошли в систему. Войдите через Google.",
+    "NO_SOURCE_CAPTIONS": "У видео нет субтитров для перевода.",
+    "ACCOUNT_REAUTH_NEEDED": "Сессия истекла — войдите снова.",
+    "generic": "Что-то пошло не так: {{message}}"
+  }
+}

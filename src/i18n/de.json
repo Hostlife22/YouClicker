@@ -1,0 +1,96 @@
+{
+  "app": {
+    "title": "YouClicker Personal",
+    "supportGroup": "Support-Gruppe",
+    "back": "Zurück",
+    "start": "Los geht's",
+    "next": "Weiter",
+    "ok": "Ok",
+    "cancel": "Abbrechen",
+    "save": "Speichern",
+    "loading": "Wird geladen...",
+    "error": "Fehler"
+  },
+  "welcome": {
+    "title": "Willkommen bei YouClicker",
+    "selectLanguage": "Wählen Sie die App-Sprache",
+    "continue": "Los geht's"
+  },
+  "settings": {
+    "title": "Einstellungen",
+    "googleOAuth": "Google OAuth-Anmeldedaten",
+    "clientId": "OAuth Client ID",
+    "clientSecret": "OAuth Client Secret",
+    "howToGetThem": "So erhalten Sie diese",
+    "save": "Anmeldedaten speichern",
+    "defaults": "Standardsprachen",
+    "signOut": "Abmelden"
+  },
+  "login": {
+    "promptCredentials": "Geben Sie zuerst Ihre Google OAuth-Anmeldedaten in den Einstellungen ein.",
+    "openSettings": "Einstellungen öffnen",
+    "title": "Mit Google anmelden, um zu starten",
+    "signInGoogle": "Mit Google anmelden",
+    "newAccount": "Neues Konto",
+    "rememberPassword": "Passwort merken",
+    "restorePassword": "Passwort wiederherstellen"
+  },
+  "channels": {
+    "title": "Meine Kanäle",
+    "addChannel": "Kanal hinzufügen",
+    "remove": "Konto entfernen",
+    "confirmRemove": "Konto {{account}} und alle seine Kanäle entfernen?",
+    "videos": "Videos",
+    "views": "Aufrufe",
+    "subscribers": "Abonnenten",
+    "empty": "Keine Kanäle gefunden. Melden Sie sich mit Google an.",
+    "developedWith": "Entwickelt mit"
+  },
+  "videos": {
+    "title": "Videos",
+    "published": "Veröffentlicht",
+    "loadMore": "Mehr laden",
+    "refresh": "Aktualisieren",
+    "empty": "Dieser Kanal hat keine öffentlichen Videos.",
+    "loading": "Videos werden geladen..."
+  },
+  "video": {
+    "selectedLangs": "Ausgewählte Sprachen: {{count}}",
+    "pickLanguages": "Sprachen wählen",
+    "translateTitleDescription": "Titel und Beschreibung übersetzen",
+    "translateSubtitles": "Untertitel übersetzen",
+    "noSourceCaptions": "Dieses Video hat keine Untertitelspur zum Übersetzen. Fügen Sie zuerst Untertitel in YouTube Studio hinzu.",
+    "title": "Titel:",
+    "description": "Beschreibung:"
+  },
+  "languages": {
+    "title": "Zielsprachen wählen",
+    "selectAll": "Alle auswählen",
+    "invert": "Umkehren",
+    "loadDefault": "Standard laden",
+    "saveDefault": "Standard speichern",
+    "selectedCount": "{{count}} ausgewählt"
+  },
+  "progress": {
+    "title": "Wir übersetzen schnell",
+    "selectVideo": "Ausgewähltes Video",
+    "selectLanguages": "Ausgewählte Sprachen",
+    "completeStep": "Übersetzung abschließen",
+    "successTitle": "Erfolgreich abgeschlossen!",
+    "step": "Schritt {{n}}",
+    "current": "Übersetze {{lang}}...",
+    "elapsed": "Verstrichene Zeit",
+    "translateTitleDesc": "Titel und Beschreibung übersetzen",
+    "translateSubs": "Untertitel übersetzen"
+  },
+  "footer": {
+    "support": "Support-Gruppe"
+  },
+  "errors": {
+    "MISSING_OAUTH_CREDENTIALS": "Google OAuth-Anmeldedaten sind nicht gesetzt. Öffnen Sie die Einstellungen und fügen Sie Client ID + Secret hinzu.",
+    "NOT_AUTHENTICATED": "Sie sind nicht angemeldet. Melden Sie sich zuerst mit Google an.",
+    "NO_SOURCE_CAPTIONS": "Video hat keine Untertitel zum Übersetzen.",
+    "ACCOUNT_REAUTH_NEEDED": "Sitzung abgelaufen — bitte erneut anmelden.",
+    "generic": "Etwas ist schiefgelaufen: {{message}}"
+  }
+}

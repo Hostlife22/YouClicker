@@ -1,0 +1,96 @@
+{
+  "app": {
+    "title": "YouClicker Personal",
+    "supportGroup": "Groupe de support",
+    "back": "Retour",
+    "start": "Commencer",
+    "next": "Suivant",
+    "ok": "Ok",
+    "cancel": "Annuler",
+    "save": "Enregistrer",
+    "loading": "Chargement...",
+    "error": "Erreur"
+  },
+  "welcome": {
+    "title": "Bienvenue sur YouClicker",
+    "selectLanguage": "Choisissez la langue de l'application",
+    "continue": "Commencer"
+  },
+  "settings": {
+    "title": "Paramètres",
+    "googleOAuth": "Identifiants Google OAuth",
+    "clientId": "OAuth Client ID",
+    "clientSecret": "OAuth Client Secret",
+    "howToGetThem": "Comment les obtenir",
+    "save": "Enregistrer les identifiants",
+    "defaults": "Langues par défaut",
+    "signOut": "Se déconnecter"
+  },
+  "login": {
+    "promptCredentials": "Entrez d'abord vos identifiants Google OAuth dans les paramètres.",
+    "openSettings": "Ouvrir les paramètres",
+    "title": "Connectez-vous avec Google pour commencer",
+    "signInGoogle": "Se connecter avec Google",
+    "newAccount": "Nouveau compte",
+    "rememberPassword": "Se souvenir du mot de passe",
+    "restorePassword": "Récupérer le mot de passe"
+  },
+  "channels": {
+    "title": "Mes chaînes",
+    "addChannel": "Ajouter une chaîne",
+    "remove": "Supprimer le compte",
+    "confirmRemove": "Supprimer le compte {{account}} et toutes ses chaînes ?",
+    "videos": "Vidéos",
+    "views": "Vues",
+    "subscribers": "Abonnés",
+    "empty": "Aucune chaîne trouvée. Connectez-vous avec Google.",
+    "developedWith": "Développé avec"
+  },
+  "videos": {
+    "title": "Vidéos",
+    "published": "Publié",
+    "loadMore": "Charger plus",
+    "refresh": "Actualiser",
+    "empty": "Cette chaîne n'a pas de vidéos publiques.",
+    "loading": "Chargement des vidéos..."
+  },
+  "video": {
+    "selectedLangs": "Langues sélectionnées : {{count}}",
+    "pickLanguages": "Choisir les langues",
+    "translateTitleDescription": "Traduire le titre et la description",
+    "translateSubtitles": "Traduire les sous-titres",
+    "noSourceCaptions": "Cette vidéo n'a pas de piste de sous-titres à traduire. Ajoutez-les d'abord dans YouTube Studio.",
+    "title": "Titre :",
+    "description": "Description :"
+  },
+  "languages": {
+    "title": "Choisissez les langues cibles",
+    "selectAll": "Tout sélectionner",
+    "invert": "Inverser",
+    "loadDefault": "Charger par défaut",
+    "saveDefault": "Enregistrer par défaut",
+    "selectedCount": "{{count}} sélectionnées"
+  },
+  "progress": {
+    "title": "Nous traduisons rapidement",
+    "selectVideo": "Vidéo sélectionnée",
+    "selectLanguages": "Langues sélectionnées",
+    "completeStep": "Terminer la traduction",
+    "successTitle": "Terminé avec succès !",
+    "step": "Étape {{n}}",
+    "current": "Traduction de {{lang}}...",
+    "elapsed": "Temps écoulé",
+    "translateTitleDesc": "Traduire le titre et la description",
+    "translateSubs": "Traduire les sous-titres"
+  },
+  "footer": {
+    "support": "Groupe de support"
+  },
+  "errors": {
+    "MISSING_OAUTH_CREDENTIALS": "Les identifiants Google OAuth ne sont pas définis. Ouvrez les paramètres et ajoutez Client ID + Secret.",
+    "NOT_AUTHENTICATED": "Vous n'êtes pas connecté. Connectez-vous d'abord avec Google.",
+    "NO_SOURCE_CAPTIONS": "La vidéo n'a pas de sous-titres à traduire.",
+    "ACCOUNT_REAUTH_NEEDED": "Session expirée — reconnectez-vous.",
+    "generic": "Quelque chose s'est mal passé : {{message}}"
+  }
+}
