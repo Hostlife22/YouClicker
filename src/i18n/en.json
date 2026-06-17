@@ -70,6 +70,7 @@
     "loadDefault": "Load defaults",
     "saveDefault": "Save defaults",
     "selectedCount": "{{count}} selected",
+    "quotaWarningTitle": "High quota usage",
     "quotaWarning": "This subtitle run will use about {{units}} YouTube quota units and may exceed your daily limit of {{limit}}. Continue?"
   },
   "progress": {
@@ -89,6 +90,12 @@
   },
   "footer": {
     "support": "Support Group"
+  },
+  "dialogs": {
+    "aboutTitle": "About",
+    "aboutBody": "YouClicker Personal v1.0.0",
+    "helpTitle": "Help",
+    "helpBody": "Personal fork — translation runs on your own local Claude Code subscription; no credits required."
   },
   "errors": {
     "MISSING_OAUTH_CREDENTIALS": "Google OAuth credentials are not set. Open Settings and add Client ID + Secret.",

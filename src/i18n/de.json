@@ -70,6 +70,7 @@
     "loadDefault": "Standard laden",
     "saveDefault": "Standard speichern",
     "selectedCount": "{{count}} ausgewählt",
+    "quotaWarningTitle": "Hoher Kontingentverbrauch",
     "quotaWarning": "Dieser Untertitel-Lauf verbraucht etwa {{units}} YouTube-Kontingenteinheiten und überschreitet möglicherweise Ihr Tageslimit von {{limit}}. Fortfahren?"
   },
   "progress": {
@@ -89,6 +90,12 @@
   },
   "footer": {
     "support": "Support-Gruppe"
+  },
+  "dialogs": {
+    "aboutTitle": "Über",
+    "aboutBody": "YouClicker Personal v1.0.0",
+    "helpTitle": "Hilfe",
+    "helpBody": "Persönliche Version — die Übersetzung läuft über Ihr eigenes lokales Claude-Code-Abo; keine Credits erforderlich."
   },
   "errors": {
     "MISSING_OAUTH_CREDENTIALS": "Google OAuth-Anmeldedaten sind nicht gesetzt. Öffnen Sie die Einstellungen und fügen Sie Client ID + Secret hinzu.",

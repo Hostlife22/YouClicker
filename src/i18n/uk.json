@@ -70,6 +70,7 @@
     "loadDefault": "Завантажити за замовчуванням",
     "saveDefault": "Зберегти за замовчуванням",
     "selectedCount": "Вибрано: {{count}}",
+    "quotaWarningTitle": "Високі витрати квоти",
     "quotaWarning": "Цей переклад субтитрів витратить близько {{units}} одиниць квоти YouTube і може перевищити денний ліміт {{limit}}. Продовжити?"
   },
   "progress": {
@@ -89,6 +90,12 @@
   },
   "footer": {
     "support": "Група підтримки"
+  },
+  "dialogs": {
+    "aboutTitle": "Про програму",
+    "aboutBody": "YouClicker Personal v1.0.0",
+    "helpTitle": "Довідка",
+    "helpBody": "Персональна версія — переклад виконується на вашій локальній підписці Claude Code; кредити не потрібні."
   },
   "errors": {
     "MISSING_OAUTH_CREDENTIALS": "Облікові дані Google OAuth не налаштовані. Відкрийте налаштування та додайте Client ID + Secret.",

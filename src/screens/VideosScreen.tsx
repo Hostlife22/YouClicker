@@ -67,6 +67,7 @@ export function VideosScreen() {
         <div className="w-64 flex flex-col items-center">
           <button
             onClick={() => setScreen("channels")}
+            aria-label={t("app.back")}
             className="self-start w-9 h-9 rounded-lg mb-4"
             style={{ background: "#1f1f1f", border: "1px solid #e63946", color: "#e63946" }}
           >

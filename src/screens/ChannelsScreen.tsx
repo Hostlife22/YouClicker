@@ -5,6 +5,7 @@ import { useApp } from "../store";
 import { AppFrame } from "../components/AppFrame";
 import { Avatar } from "../components/Avatar";
 import { errorText } from "../lib/errorText";
+import { useDialog } from "../lib/dialog";
 import { api } from "../api";
 
 function formatNumber(n: number): string {
@@ -22,6 +23,7 @@ export function ChannelsScreen() {
   const setScreen = useApp((s) => s.setScreen);
   const selectChannel = useApp((s) => s.selectChannel);
   const email = useApp((s) => s.email);
+  const confirmDialog = useDialog((s) => s.confirm);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [accountErrors, setAccountErrors] = useState<AccountError[]>([]);
@@ -65,9 +67,10 @@ export function ChannelsScreen() {
   }
 
   async function removeChannel(channel: Channel) {
-    const ok = window.confirm(
-      t("channels.confirmRemove", { account: channel.accountId }),
-    );
+    const ok = await confirmDialog({
+      title: t("channels.remove"),
+      message: t("channels.confirmRemove", { account: channel.accountId }),
+    });
     if (!ok) return;
     setLoading(true);
     setError(null);
@@ -137,6 +140,7 @@ export function ChannelsScreen() {
                   onClick={() => removeChannel(c)}
                   disabled={loading}
                   title={t("channels.remove")}
+                  aria-label={t("channels.remove")}
                   className="w-9 h-9 rounded-md flex items-center justify-center shrink-0"
                   style={{ background: "#e9e9e9", color: "#1a1a1a" }}
                 >
@@ -153,6 +157,7 @@ export function ChannelsScreen() {
               onClick={addAccount}
               disabled={loading}
               title={t("channels.addChannel")}
+              aria-label={t("channels.addChannel")}
               className="w-12 h-12 rounded-lg flex items-center justify-center text-2xl"
               style={{ background: "#1f1f1f", border: "1px solid #3a3a3a" }}
             >

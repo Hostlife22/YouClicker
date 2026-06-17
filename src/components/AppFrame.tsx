@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 import { useApp } from "../store";
+import { useDialog } from "../lib/dialog";
 
 type Props = {
   children: ReactNode;
@@ -12,6 +13,7 @@ type Props = {
 export function AppFrame({ children, showFooter = true, topRight, topLeft }: Props) {
   const { t } = useTranslation();
   const setScreen = useApp((s) => s.setScreen);
+  const alertDialog = useDialog((s) => s.alert);
   return (
     <div className="h-screen flex flex-col" style={{ background: "#1a1a1a" }}>
       <div className="flex items-center justify-between px-4 pt-3 pb-2 text-xs text-[#a0a0a0]">
@@ -36,9 +38,31 @@ export function AppFrame({ children, showFooter = true, topRight, topLeft }: Pro
             <span>{t("footer.support")}</span>
           </div>
           <div className="flex-1 flex justify-end gap-2">
-            <IconButton onClick={() => setScreen("settings")} label="⚙" />
-            <IconButton onClick={() => alert("YouClicker Personal v1.0.0")} label="i" />
-            <IconButton onClick={() => alert("Personal fork — no credits required.")} label="?" />
+            <IconButton
+              onClick={() => setScreen("settings")}
+              label="⚙"
+              ariaLabel={t("settings.title")}
+            />
+            <IconButton
+              onClick={() =>
+                void alertDialog({
+                  title: t("dialogs.aboutTitle"),
+                  message: t("dialogs.aboutBody"),
+                })
+              }
+              label="i"
+              ariaLabel={t("dialogs.aboutTitle")}
+            />
+            <IconButton
+              onClick={() =>
+                void alertDialog({
+                  title: t("dialogs.helpTitle"),
+                  message: t("dialogs.helpBody"),
+                })
+              }
+              label="?"
+              ariaLabel={t("dialogs.helpTitle")}
+            />
           </div>
         </div>
       )}
@@ -46,10 +70,19 @@ export function AppFrame({ children, showFooter = true, topRight, topLeft }: Pro
   );
 }
 
-function IconButton({ onClick, label }: { onClick: () => void; label: string }) {
+function IconButton({
+  onClick,
+  label,
+  ariaLabel,
+}: {
+  onClick: () => void;
+  label: string;
+  ariaLabel: string;
+}) {
   return (
     <button
       onClick={onClick}
+      aria-label={ariaLabel}
       className="w-8 h-8 rounded-full flex items-center justify-center text-sm hover:bg-[#2a2a2a]"
       style={{ border: "1.5px solid #e63946", color: "#e63946" }}
     >

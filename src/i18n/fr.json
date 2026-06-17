@@ -70,6 +70,7 @@
     "loadDefault": "Charger par défaut",
     "saveDefault": "Enregistrer par défaut",
     "selectedCount": "{{count}} sélectionnées",
+    "quotaWarningTitle": "Consommation de quota élevée",
     "quotaWarning": "Cette traduction de sous-titres utilisera environ {{units}} unités de quota YouTube et pourrait dépasser votre limite quotidienne de {{limit}}. Continuer ?"
   },
   "progress": {
@@ -89,6 +90,12 @@
   },
   "footer": {
     "support": "Groupe de support"
+  },
+  "dialogs": {
+    "aboutTitle": "À propos",
+    "aboutBody": "YouClicker Personal v1.0.0",
+    "helpTitle": "Aide",
+    "helpBody": "Version personnelle — la traduction s'exécute sur votre propre abonnement local Claude Code ; aucun crédit requis."
   },
   "errors": {
     "MISSING_OAUTH_CREDENTIALS": "Les identifiants Google OAuth ne sont pas définis. Ouvrez les paramètres et ajoutez Client ID + Secret.",

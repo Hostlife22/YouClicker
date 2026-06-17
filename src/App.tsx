@@ -10,25 +10,10 @@ import { VideosScreen } from "./screens/VideosScreen";
 import { VideoDetailScreen } from "./screens/VideoDetailScreen";
 import { LanguagesScreen } from "./screens/LanguagesScreen";
 import { TranslateProgressScreen } from "./screens/TranslateProgressScreen";
+import { DialogHost } from "./components/DialogHost";
+import type { Screen } from "./store";
 
-export default function App() {
-  const screen = useApp((s) => s.screen);
-  const setSettings = useApp((s) => s.setSettings);
-  const setAuth = useApp((s) => s.setAuth);
-  const { i18n } = useTranslation();
-
-  useEffect(() => {
-    void (async () => {
-      const settings = await api().settings.get();
-      setSettings(settings);
-      if (settings.uiLanguage !== i18n.language) {
-        await i18n.changeLanguage(settings.uiLanguage);
-      }
-      const auth = await api().auth.status();
-      setAuth(auth.authenticated, auth.email);
-    })();
-  }, []);
-
+function renderScreen(screen: Screen) {
   switch (screen) {
     case "welcome":
       return <WelcomeScreen />;
@@ -49,4 +34,30 @@ export default function App() {
     default:
       return <WelcomeScreen />;
   }
+}
+
+export default function App() {
+  const screen = useApp((s) => s.screen);
+  const setSettings = useApp((s) => s.setSettings);
+  const setAuth = useApp((s) => s.setAuth);
+  const { i18n } = useTranslation();
+
+  useEffect(() => {
+    void (async () => {
+      const settings = await api().settings.get();
+      setSettings(settings);
+      if (settings.uiLanguage !== i18n.language) {
+        await i18n.changeLanguage(settings.uiLanguage);
+      }
+      const auth = await api().auth.status();
+      setAuth(auth.authenticated, auth.email);
+    })();
+  }, []);
+
+  return (
+    <>
+      {renderScreen(screen)}
+      <DialogHost />
+    </>
+  );
 }

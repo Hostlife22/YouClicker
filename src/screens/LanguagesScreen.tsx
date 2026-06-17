@@ -3,6 +3,7 @@ import { useApp } from "../store";
 import { AppFrame } from "../components/AppFrame";
 import { LANGUAGES } from "@shared/languages";
 import { estimateQuota, exceedsDailyQuota, DAILY_QUOTA } from "@shared/quota";
+import { useDialog } from "../lib/dialog";
 import { api } from "../api";
 import { useState } from "react";
 
@@ -21,6 +22,7 @@ export function LanguagesScreen() {
   const selectVideo = useApp((s) => s.selectVideo);
   const clearChannelVideos = useApp((s) => s.clearChannelVideos);
   const mode = useApp((s) => s.translationMode) ?? "title_description";
+  const confirmDialog = useDialog((s) => s.confirm);
 
   const [busy, setBusy] = useState(false);
 
@@ -49,12 +51,13 @@ export function LanguagesScreen() {
     // Subtitle uploads are the expensive path (~400 quota units each). Warn
     // before a run that would likely exceed the daily quota.
     if (mode === "subtitles" && exceedsDailyQuota("subtitles", selected.length)) {
-      const ok = window.confirm(
-        t("languages.quotaWarning", {
+      const ok = await confirmDialog({
+        title: t("languages.quotaWarningTitle"),
+        message: t("languages.quotaWarning", {
           units: estimateQuota("subtitles", selected.length),
           limit: DAILY_QUOTA,
         }),
-      );
+      });
       if (!ok) return;
     }
 
@@ -89,6 +92,7 @@ export function LanguagesScreen() {
         <div className="flex items-center gap-2 mb-3">
           <button
             onClick={() => setScreen("video")}
+            aria-label={t("app.back")}
             className="w-9 h-9 rounded-lg"
             style={{ background: "#1f1f1f", border: "1px solid #e63946", color: "#e63946" }}
           >
