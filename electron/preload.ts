@@ -9,6 +9,7 @@ import type {
   TitleDescriptionResult,
   SubtitlesResult,
   TranslationJob,
+  Localizations,
 } from "../shared/types";
 import type { Api, ProgressEvent } from "../shared/api";
 
@@ -51,6 +52,12 @@ const api: Api = {
       ipcRenderer.invoke("youtube:video", account, videoId, force),
     captions: (account: string, videoId: string, force = false): Promise<Caption[]> =>
       ipcRenderer.invoke("youtube:captions", account, videoId, force),
+    updateLocalizations: (
+      account: string,
+      videoId: string,
+      localizations: Localizations,
+    ): Promise<Video> =>
+      ipcRenderer.invoke("youtube:updateLocalizations", account, videoId, localizations),
   },
   translate: {
     titleDescription: (

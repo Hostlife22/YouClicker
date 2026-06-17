@@ -57,6 +57,7 @@
   "video": {
     "selectedLangs": "Вибрані мови: {{count}}",
     "pickLanguages": "Вибрати мови",
+    "viewLocalizations": "Перегляд / редагування перекладів",
     "translateTitleDescription": "Перекласти назву та опис",
     "translateSubtitles": "Перекласти субтитри",
     "noSourceCaptions": "У цього відео немає доріжки субтитрів для перекладу. Додайте субтитри в YouTube Studio.",
@@ -97,6 +98,13 @@
     "helpTitle": "Довідка",
     "helpBody": "Персональна версія — переклад виконується на вашій локальній підписці Claude Code; кредити не потрібні."
   },
+  "localizations": {
+    "title": "Переклади",
+    "count": "локалізацій: {{count}}",
+    "language": "Мова",
+    "save": "Зберегти переклад",
+    "saved": "Збережено: {{lang}}"
+  },
   "history": {
     "title": "Історія",
     "empty": "Поки немає завдань перекладу.",
@@ -121,6 +129,7 @@
     "INVALID_SETTINGS": "Недопустимі налаштування.",
     "INVALID_ACCOUNT": "Недопустимий обліковий запис.",
     "INVALID_VIDEO_ID": "Недопустиме відео.",
+    "INVALID_LOCALIZATIONS": "Недопустимі переклади.",
     "ACCOUNT_REAUTH_NEEDED": "Сесія завершилась — увійдіть знову.",
     "generic": "Щось пішло не так: {{message}}"
   }

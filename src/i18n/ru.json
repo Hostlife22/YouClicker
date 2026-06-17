@@ -57,6 +57,7 @@
   "video": {
     "selectedLangs": "Выбранные языки: {{count}}",
     "pickLanguages": "Выбрать языки",
+    "viewLocalizations": "Просмотр / редактирование переводов",
     "translateTitleDescription": "Перевести название и описание",
     "translateSubtitles": "Перевести субтитры",
     "noSourceCaptions": "У видео нет дорожки субтитров. Добавьте субтитры в YouTube Studio.",
@@ -97,6 +98,13 @@
     "helpTitle": "Справка",
     "helpBody": "Персональная версия — перевод выполняется на вашей локальной подписке Claude Code; кредиты не нужны."
   },
+  "localizations": {
+    "title": "Переводы",
+    "count": "локализаций: {{count}}",
+    "language": "Язык",
+    "save": "Сохранить перевод",
+    "saved": "Сохранено: {{lang}}"
+  },
   "history": {
     "title": "История",
     "empty": "Пока нет задач перевода.",
@@ -121,6 +129,7 @@
     "INVALID_SETTINGS": "Недопустимые настройки.",
     "INVALID_ACCOUNT": "Недопустимый аккаунт.",
     "INVALID_VIDEO_ID": "Недопустимое видео.",
+    "INVALID_LOCALIZATIONS": "Недопустимые переводы.",
     "ACCOUNT_REAUTH_NEEDED": "Сессия истекла — войдите снова.",
     "generic": "Что-то пошло не так: {{message}}"
   }

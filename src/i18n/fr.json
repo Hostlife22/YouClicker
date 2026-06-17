@@ -57,6 +57,7 @@
   "video": {
     "selectedLangs": "Langues sélectionnées : {{count}}",
     "pickLanguages": "Choisir les langues",
+    "viewLocalizations": "Voir / modifier les traductions",
     "translateTitleDescription": "Traduire le titre et la description",
     "translateSubtitles": "Traduire les sous-titres",
     "noSourceCaptions": "Cette vidéo n'a pas de piste de sous-titres à traduire. Ajoutez-les d'abord dans YouTube Studio.",
@@ -97,6 +98,13 @@
     "helpTitle": "Aide",
     "helpBody": "Version personnelle — la traduction s'exécute sur votre propre abonnement local Claude Code ; aucun crédit requis."
   },
+  "localizations": {
+    "title": "Traductions",
+    "count": "{{count}} localisées",
+    "language": "Langue",
+    "save": "Enregistrer la traduction",
+    "saved": "{{lang}} enregistré"
+  },
   "history": {
     "title": "Historique",
     "empty": "Aucune tâche de traduction pour l'instant.",
@@ -121,6 +129,7 @@
     "INVALID_SETTINGS": "Ces paramètres sont invalides.",
     "INVALID_ACCOUNT": "Compte invalide.",
     "INVALID_VIDEO_ID": "Vidéo invalide.",
+    "INVALID_LOCALIZATIONS": "Ces traductions sont invalides.",
     "ACCOUNT_REAUTH_NEEDED": "Session expirée — reconnectez-vous.",
     "generic": "Quelque chose s'est mal passé : {{message}}"
   }

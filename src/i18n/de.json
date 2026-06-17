@@ -57,6 +57,7 @@
   "video": {
     "selectedLangs": "Ausgewählte Sprachen: {{count}}",
     "pickLanguages": "Sprachen wählen",
+    "viewLocalizations": "Übersetzungen ansehen / bearbeiten",
     "translateTitleDescription": "Titel und Beschreibung übersetzen",
     "translateSubtitles": "Untertitel übersetzen",
     "noSourceCaptions": "Dieses Video hat keine Untertitelspur zum Übersetzen. Fügen Sie zuerst Untertitel in YouTube Studio hinzu.",
@@ -97,6 +98,13 @@
     "helpTitle": "Hilfe",
     "helpBody": "Persönliche Version — die Übersetzung läuft über Ihr eigenes lokales Claude-Code-Abo; keine Credits erforderlich."
   },
+  "localizations": {
+    "title": "Übersetzungen",
+    "count": "{{count}} lokalisiert",
+    "language": "Sprache",
+    "save": "Übersetzung speichern",
+    "saved": "{{lang}} gespeichert"
+  },
   "history": {
     "title": "Verlauf",
     "empty": "Noch keine Übersetzungsaufträge.",
@@ -121,6 +129,7 @@
     "INVALID_SETTINGS": "Diese Einstellungen sind ungültig.",
     "INVALID_ACCOUNT": "Ungültiges Konto.",
     "INVALID_VIDEO_ID": "Ungültiges Video.",
+    "INVALID_LOCALIZATIONS": "Diese Übersetzungen sind ungültig.",
     "ACCOUNT_REAUTH_NEEDED": "Sitzung abgelaufen — bitte erneut anmelden.",
     "generic": "Etwas ist schiefgelaufen: {{message}}"
   }

@@ -56,12 +56,22 @@ export function VideoDetailScreen() {
           <div className="mb-3">
             <Avatar src={video.thumbnailUrl} alt={video.title} size={192} />
           </div>
-          <div className="text-sm text-[#a0a0a0] mb-4">
+          <button
+            onClick={() => setScreen("localizations")}
+            className="text-sm text-[#a0a0a0] mb-4 hover:text-[#e63946]"
+            title={t("video.viewLocalizations")}
+          >
             » {Object.keys(video.localizations).length}
-          </div>
+          </button>
           <div className="text-xs text-[#a0a0a0] mb-2">
             {t("video.selectedLangs", { count: selectedLanguages.length })}
           </div>
+          <button
+            onClick={() => setScreen("localizations")}
+            className="outlined-btn w-full mb-3 text-sm"
+          >
+            {t("video.viewLocalizations")}
+          </button>
           <button
             onClick={() => startMode("select")}
             className="outlined-btn w-full mb-3 text-sm"

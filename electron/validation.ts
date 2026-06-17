@@ -17,6 +17,11 @@ export const cueBatchSchema = z.array(
   z.object({ i: z.number().int(), t: z.string() }),
 );
 
+// Manually-edited localizations sent from the renderer (language code -> pair).
+export const localizationsSchema = z.record(
+  z.object({ title: z.string(), description: z.string() }),
+);
+
 // --- IPC inputs from the renderer ---
 
 const UI_LANGUAGE = z.enum(["en", "de", "fr", "uk", "ru"]);

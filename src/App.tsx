@@ -11,6 +11,7 @@ import { VideoDetailScreen } from "./screens/VideoDetailScreen";
 import { LanguagesScreen } from "./screens/LanguagesScreen";
 import { TranslateProgressScreen } from "./screens/TranslateProgressScreen";
 import { HistoryScreen } from "./screens/HistoryScreen";
+import { LocalizationsScreen } from "./screens/LocalizationsScreen";
 import { DialogHost } from "./components/DialogHost";
 import type { Screen } from "./store";
 
@@ -34,6 +35,8 @@ function renderScreen(screen: Screen) {
       return <TranslateProgressScreen />;
     case "history":
       return <HistoryScreen />;
+    case "localizations":
+      return <LocalizationsScreen />;
     default:
       return <WelcomeScreen />;
   }

@@ -57,6 +57,7 @@
   "video": {
     "selectedLangs": "Selected languages: {{count}}",
     "pickLanguages": "Pick languages",
+    "viewLocalizations": "View / edit translations",
     "translateTitleDescription": "Translate title and description",
     "translateSubtitles": "Translate subtitles",
     "noSourceCaptions": "This video has no caption track to translate from. Add subtitles in YouTube Studio first.",
@@ -97,6 +98,13 @@
     "helpTitle": "Help",
     "helpBody": "Personal fork — translation runs on your own local Claude Code subscription; no credits required."
   },
+  "localizations": {
+    "title": "Translations",
+    "count": "{{count}} localized",
+    "language": "Language",
+    "save": "Save translation",
+    "saved": "Saved {{lang}}"
+  },
   "history": {
     "title": "History",
     "empty": "No translation jobs yet.",
@@ -121,6 +129,7 @@
     "INVALID_SETTINGS": "Those settings are invalid.",
     "INVALID_ACCOUNT": "Invalid account.",
     "INVALID_VIDEO_ID": "Invalid video.",
+    "INVALID_LOCALIZATIONS": "Those translations are invalid.",
     "ACCOUNT_REAUTH_NEEDED": "Session expired — sign in again.",
     "generic": "Something went wrong: {{message}}"
   }

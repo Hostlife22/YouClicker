@@ -10,6 +10,7 @@ import type {
   TitleDescriptionResult,
   SubtitlesResult,
   TranslationJob,
+  Localizations,
 } from "./types";
 
 export type ProgressEvent = {
@@ -51,6 +52,12 @@ export type Api = {
     ) => Promise<VideoPage>;
     video: (account: string, videoId: string, force?: boolean) => Promise<Video | null>;
     captions: (account: string, videoId: string, force?: boolean) => Promise<Caption[]>;
+    /** Merge the given localizations into the video and return the updated video. */
+    updateLocalizations: (
+      account: string,
+      videoId: string,
+      localizations: Localizations,
+    ) => Promise<Video>;
   };
   translate: {
     titleDescription: (

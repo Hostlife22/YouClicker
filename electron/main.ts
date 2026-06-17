@@ -17,6 +17,7 @@ import {
   listChannelVideos,
   getVideo,
   listCaptions,
+  updateVideoLocalizations,
 } from "./youtube";
 import {
   translateTitleDescriptionMulti,
@@ -27,6 +28,7 @@ import { suppressDevToolsNoise } from "./devtools-noise";
 import {
   settingsPatchSchema,
   languageCodes,
+  localizationsSchema,
   nonEmptyString,
   parseOrThrow,
 } from "./validation";
@@ -114,6 +116,15 @@ function registerIpc(): void {
   );
   ipcMain.handle("youtube:captions", (_e, account: string, videoId: string, force = false) =>
     listCaptions(account, videoId, force),
+  );
+  ipcMain.handle(
+    "youtube:updateLocalizations",
+    (_e, account: string, videoId: string, localizations: unknown) =>
+      updateVideoLocalizations(
+        parseOrThrow(nonEmptyString, account, "INVALID_ACCOUNT"),
+        parseOrThrow(nonEmptyString, videoId, "INVALID_VIDEO_ID"),
+        parseOrThrow(localizationsSchema, localizations, "INVALID_LOCALIZATIONS"),
+      ),
   );
 
   ipcMain.handle(
