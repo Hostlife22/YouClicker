@@ -26,6 +26,8 @@ export function LanguagesScreen() {
   const confirmDialog = useDialog((s) => s.confirm);
 
   const [busy, setBusy] = useState(false);
+  // When off, only languages not yet translated are processed (skip existing).
+  const [translateAll, setTranslateAll] = useState(true);
 
   function selectAll() {
     setSelected(LANGUAGES.map((l) => l.code));
@@ -75,6 +77,7 @@ export function LanguagesScreen() {
               video.id,
               selected,
               sourceLanguage,
+              !translateAll,
             )
           : await api().translate.subtitles(
               accountId,
@@ -82,6 +85,7 @@ export function LanguagesScreen() {
               video.id,
               selected,
               sourceLanguage,
+              !translateAll,
             );
       finishJob("completed", { result });
       // The job mutated server-side localizations/captions; the main-process
@@ -154,6 +158,20 @@ export function LanguagesScreen() {
           <button onClick={saveDefault} className="outlined-btn text-sm">
             {t("languages.saveDefault")}
           </button>
+          {mode !== "select" && (
+            <label
+              className="flex items-center gap-2 text-sm cursor-pointer select-none ml-2"
+              title={t("languages.translateAllHint")}
+            >
+              <input
+                type="checkbox"
+                checked={translateAll}
+                onChange={(e) => setTranslateAll(e.target.checked)}
+                className="accent-[#e63946]"
+              />
+              {t("languages.translateAll")}
+            </label>
+          )}
           <div className="ml-auto">
             <button
               onClick={confirm}

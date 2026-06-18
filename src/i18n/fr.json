@@ -79,6 +79,8 @@
     "invert": "Inverser",
     "loadDefault": "Charger par défaut",
     "saveDefault": "Enregistrer par défaut",
+    "translateAll": "Traduire toutes les sélectionnées",
+    "translateAllHint": "Activé : traduire toutes les langues sélectionnées. Désactivé : uniquement celles pas encore traduites.",
     "selectedCount": "{{count}} sélectionnées",
     "quotaWarningTitle": "Consommation de quota élevée",
     "quotaWarning": "Cette traduction de sous-titres utilisera environ {{units}} unités de quota YouTube et pourrait dépasser votre limite quotidienne de {{limit}}. Continuer ?"

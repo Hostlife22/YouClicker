@@ -67,6 +67,8 @@ export type Api = {
       videoId: string,
       languages: string[],
       sourceLanguage?: string | null,
+      /** When true, skip languages that already have a localization. */
+      onlyUntranslated?: boolean,
     ) => Promise<TitleDescriptionResult>;
     subtitles: (
       account: string,
@@ -74,6 +76,8 @@ export type Api = {
       videoId: string,
       languages: string[],
       sourceLanguage?: string | null,
+      /** When true, skip languages that already have a caption track. */
+      onlyUntranslated?: boolean,
     ) => Promise<SubtitlesResult>;
     onProgress: (cb: (e: ProgressEvent) => void) => () => void;
   };

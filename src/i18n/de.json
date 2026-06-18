@@ -79,6 +79,8 @@
     "invert": "Umkehren",
     "loadDefault": "Standard laden",
     "saveDefault": "Standard speichern",
+    "translateAll": "Alle ausgewählten übersetzen",
+    "translateAllHint": "An: alle ausgewählten Sprachen übersetzen. Aus: nur noch nicht übersetzte.",
     "selectedCount": "{{count}} ausgewählt",
     "quotaWarningTitle": "Hoher Kontingentverbrauch",
     "quotaWarning": "Dieser Untertitel-Lauf verbraucht etwa {{units}} YouTube-Kontingenteinheiten und überschreitet möglicherweise Ihr Tageslimit von {{limit}}. Fortfahren?"

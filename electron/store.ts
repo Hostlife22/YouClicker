@@ -1,9 +1,13 @@
 import Store from "electron-store";
 import type { Settings, Account } from "../shared/types";
+import { DEFAULT_TARGET_LANGUAGES } from "../shared/languages";
+
+/** The original built-in default; migrated to DEFAULT_TARGET_LANGUAGES on load. */
+const LEGACY_DEFAULT_LANGUAGES = ["en", "de", "fr", "es", "it"];
 
 const DEFAULTS: Settings = {
   uiLanguage: "ru",
-  defaultLanguages: ["en", "de", "fr", "es", "it"],
+  defaultLanguages: DEFAULT_TARGET_LANGUAGES,
   googleClientId: null,
   googleClientSecret: null,
   accounts: [],
@@ -39,6 +43,16 @@ const store = new Store<Settings>({
     },
   },
 });
+
+// One-time migration: if the persisted default is still the old built-in set,
+// upgrade it to the current preset. A genuinely customized list is left alone.
+const persistedDefaults = store.get("defaultLanguages");
+if (
+  persistedDefaults.length === LEGACY_DEFAULT_LANGUAGES.length &&
+  persistedDefaults.every((code, i) => code === LEGACY_DEFAULT_LANGUAGES[i])
+) {
+  store.set("defaultLanguages", DEFAULT_TARGET_LANGUAGES);
+}
 
 export function getSettings(): Settings {
   return {

@@ -13,6 +13,8 @@ import type {
 import { withCache, invalidate, TTL } from "./cache";
 import { withRetry } from "./retry";
 import { sanitizeLocalizations } from "../shared/localizationLimits";
+import { pickSupportedLocalizations } from "../shared/localizationLanguages";
+import { saveSupportedLanguages } from "./translationsExport";
 import log from "electron-log/main";
 
 /**
@@ -23,6 +25,43 @@ import log from "electron-log/main";
 async function yt(account: string): Promise<youtube_v3.Youtube> {
   const auth = await getAuthClient(account);
   return google.youtube({ version: "v3", auth });
+}
+
+/**
+ * The set of language codes YouTube accepts as localization keys
+ * (`i18nLanguages.list`). It's the same for every account and effectively
+ * static, so we fetch it once per process. Used to drop unsupported codes
+ * before `videos.update`, which otherwise rejects the whole request.
+ */
+let supportedLocCodes: string[] | null = null;
+
+async function getSupportedLocalizationCodes(account: string): Promise<string[]> {
+  if (supportedLocCodes) return supportedLocCodes;
+  const client = await yt(account);
+  const res = await withRetry(
+    () => client.i18nLanguages.list({ part: ["snippet"] }),
+    { label: "i18nLanguages.list" },
+  );
+  const items = (res.data.items ?? [])
+    .map((item) => ({
+      code: item.snippet?.hl ?? item.id ?? "",
+      name: item.snippet?.name ?? "",
+    }))
+    .filter((l) => l.code.length > 0);
+  supportedLocCodes = items.map((l) => l.code);
+  log.info("[youtube] loaded supported localization languages", {
+    count: supportedLocCodes.length,
+  });
+  // Persist the live set so the static picker list can be reconciled against it.
+  try {
+    const file = await saveSupportedLanguages(items);
+    log.info("[youtube] wrote supported languages reference", { file });
+  } catch (err) {
+    log.warn("[youtube] could not write supported languages reference", {
+      err: String(err),
+    });
+  }
+  return supportedLocCodes;
 }
 
 export async function listMyChannels(
@@ -78,6 +117,14 @@ export async function listAllChannels(force = false): Promise<AllChannels> {
       }
     }),
   );
+
+  // Opportunistically warm + dump YouTube's supported localization languages
+  // (writes translations/youtube-languages.json) using any working account, so
+  // the reference list is available without running a translation.
+  const firstAccount = channels[0]?.accountId;
+  if (firstAccount) {
+    void getSupportedLocalizationCodes(firstAccount).catch(() => undefined);
+  }
 
   return { channels, errors };
 }
@@ -182,6 +229,13 @@ function toVideo(item: youtube_v3.Schema$Video): Video {
   };
 }
 
+/** True when a YouTube error is the `invalidVideoMetadata` 400 (a bad/unsupported
+ * field or localization code), as opposed to a transient or auth failure. */
+function isInvalidMetadata(err: unknown): boolean {
+  const e = err as { errors?: Array<{ reason?: string }> };
+  return (e?.errors ?? []).some((x) => x?.reason === "invalidVideoMetadata");
+}
+
 export async function updateVideoLocalizations(
   account: string,
   videoId: string,
@@ -206,41 +260,101 @@ export async function updateVideoLocalizations(
       description: value.description ?? "",
     };
   }
-  // Bring the incoming localizations within YouTube's limits before merging:
-  // a single over-long or `<`/`>`-bearing field rejects the whole request with
-  // `invalidVideoMetadata`, taking every other language down with it.
+  // Bring the incoming localizations within YouTube's limits (length, `<`/`>`)
+  // before upload — those alone would trigger `invalidVideoMetadata`.
   const { value: safeLocalizations, issues } = sanitizeLocalizations(newLocalizations);
   if (Object.keys(issues).length > 0) {
     log.warn("[youtube] localizations adjusted to fit YouTube limits", { videoId, issues });
   }
-  const mergedLocalizations: Localizations = {
-    ...existingLocs,
-    ...safeLocalizations,
+
+  const snippet = {
+    title: item.snippet?.title ?? "",
+    description: item.snippet?.description ?? "",
+    categoryId: item.snippet?.categoryId ?? undefined,
+    defaultLanguage: item.snippet?.defaultLanguage ?? undefined,
+    tags: item.snippet?.tags ?? undefined,
   };
 
-  const res = await withRetry(
-    () =>
-      client.videos.update({
-        part: ["snippet", "localizations"],
-        requestBody: {
-          id: videoId,
-          snippet: {
-            title: item.snippet?.title ?? "",
-            description: item.snippet?.description ?? "",
-            categoryId: item.snippet?.categoryId ?? undefined,
-            defaultLanguage: item.snippet?.defaultLanguage ?? undefined,
-            tags: item.snippet?.tags ?? undefined,
-          },
-          localizations: mergedLocalizations,
-        },
-      }),
-    { label: "videos.update" },
-  );
+  // One PUT of the snippet + a localizations map. Returns the updated video on
+  // success, `null` when YouTube rejects the metadata (a code it won't accept),
+  // and rethrows anything else.
+  const putLocalizations = async (
+    localizations: Localizations,
+  ): Promise<youtube_v3.Schema$Video | null> => {
+    try {
+      const res = await withRetry(
+        () =>
+          client.videos.update({
+            part: ["snippet", "localizations"],
+            requestBody: { id: videoId, snippet, localizations },
+          }),
+        { label: "videos.update" },
+      );
+      return res.data;
+    } catch (err) {
+      if (isInvalidMetadata(err)) return null;
+      throw err;
+    }
+  };
+
+  // Fast path: try the whole selection at once. With valid codes this is one PUT.
+  let result = await putLocalizations({ ...existingLocs, ...safeLocalizations });
+  const dropped: string[] = [];
+
+  if (!result) {
+    // Rejected. Upload the codes YouTube is known to accept (its i18nLanguages
+    // set) as a solid base, then bisect-probe the rest, dropping only the codes
+    // it actually refuses. Probing is capped so we never burn quota.
+    const supportedCodes = await getSupportedLocalizationCodes(account);
+    const { value: known, dropped: extras } = pickSupportedLocalizations(
+      safeLocalizations,
+      supportedCodes,
+    );
+    const base: Localizations = { ...existingLocs, ...known };
+    result = await putLocalizations(base);
+    if (!result) {
+      throw new Error("LOCALIZATION_UPLOAD_REJECTED");
+    }
+
+    if (extras.length > 0) {
+      const MAX_PROBES = 12;
+      let probes = 0;
+      const probe = async (codes: string[]): Promise<void> => {
+        if (codes.length === 0) return;
+        if (probes >= MAX_PROBES) {
+          dropped.push(...codes);
+          return;
+        }
+        probes += 1;
+        const candidate: Localizations = { ...base };
+        for (const c of codes) candidate[c] = safeLocalizations[c]!;
+        const ok = await putLocalizations(candidate);
+        if (ok) {
+          for (const c of codes) base[c] = safeLocalizations[c]!;
+          result = ok;
+          return;
+        }
+        if (codes.length === 1) {
+          dropped.push(codes[0]!);
+          return;
+        }
+        const mid = Math.floor(codes.length / 2);
+        await probe(codes.slice(0, mid));
+        await probe(codes.slice(mid));
+      };
+      await probe(extras);
+    }
+  }
+
+  if (!result) throw new Error("LOCALIZATION_UPLOAD_REJECTED");
+  if (dropped.length > 0) {
+    log.warn("[youtube] dropped localizations YouTube refused", { videoId, dropped });
+  }
   log.info("[youtube] updated localizations", {
     videoId,
-    added: Object.keys(newLocalizations),
+    added: Object.keys(newLocalizations).filter((c) => !dropped.includes(c)),
   });
-  const video = toVideo(res.data);
+  const video = toVideo(result);
   // Localizations changed → drop the cached video and every cached page of its
   // channel (for this account) so the renderer's "» N localizations" refreshes.
   invalidate(`video:${account}:${videoId}`, `videos:${account}:${video.channelId}`);

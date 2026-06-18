@@ -79,6 +79,8 @@
     "invert": "Invert",
     "loadDefault": "Load defaults",
     "saveDefault": "Save defaults",
+    "translateAll": "Translate all selected",
+    "translateAllHint": "On: translate every selected language. Off: only those not translated yet.",
     "selectedCount": "{{count}} selected",
     "quotaWarningTitle": "High quota usage",
     "quotaWarning": "This subtitle run will use about {{units}} YouTube quota units and may exceed your daily limit of {{limit}}. Continue?"

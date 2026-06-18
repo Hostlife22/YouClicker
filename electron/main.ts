@@ -131,24 +131,42 @@ function registerIpc(): void {
 
   ipcMain.handle(
     "translate:titleDescription",
-    (_e, account: string, jobId: string, videoId: string, languages: string[], source: unknown) =>
+    (
+      _e,
+      account: string,
+      jobId: string,
+      videoId: string,
+      languages: string[],
+      source: unknown,
+      onlyUntranslated: unknown,
+    ) =>
       translateTitleDescriptionMulti(
         parseOrThrow(nonEmptyString, account, "INVALID_ACCOUNT"),
         jobId,
         parseOrThrow(nonEmptyString, videoId, "INVALID_VIDEO_ID"),
         parseOrThrow(languageCodes, languages, "NO_LANGUAGES_SELECTED"),
         parseOrThrow(sourceLanguageSchema, source ?? null, "INVALID_LANGUAGE"),
+        onlyUntranslated === true,
       ),
   );
   ipcMain.handle(
     "translate:subtitles",
-    (_e, account: string, jobId: string, videoId: string, languages: string[], source: unknown) =>
+    (
+      _e,
+      account: string,
+      jobId: string,
+      videoId: string,
+      languages: string[],
+      source: unknown,
+      onlyUntranslated: unknown,
+    ) =>
       translateSubtitlesMulti(
         parseOrThrow(nonEmptyString, account, "INVALID_ACCOUNT"),
         jobId,
         parseOrThrow(nonEmptyString, videoId, "INVALID_VIDEO_ID"),
         parseOrThrow(languageCodes, languages, "NO_LANGUAGES_SELECTED"),
         parseOrThrow(sourceLanguageSchema, source ?? null, "INVALID_LANGUAGE"),
+        onlyUntranslated === true,
       ),
   );
 
