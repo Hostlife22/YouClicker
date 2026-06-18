@@ -12,3 +12,6 @@ screens/.cache
 # build / test artifacts
 coverage
 *.tsbuildinfo
+
+# Local translation snapshots
+translations/

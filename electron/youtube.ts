@@ -12,6 +12,7 @@ import type {
 } from "../shared/types";
 import { withCache, invalidate, TTL } from "./cache";
 import { withRetry } from "./retry";
+import { sanitizeLocalizations } from "../shared/localizationLimits";
 import log from "electron-log/main";
 
 /**
@@ -205,9 +206,16 @@ export async function updateVideoLocalizations(
       description: value.description ?? "",
     };
   }
+  // Bring the incoming localizations within YouTube's limits before merging:
+  // a single over-long or `<`/`>`-bearing field rejects the whole request with
+  // `invalidVideoMetadata`, taking every other language down with it.
+  const { value: safeLocalizations, issues } = sanitizeLocalizations(newLocalizations);
+  if (Object.keys(issues).length > 0) {
+    log.warn("[youtube] localizations adjusted to fit YouTube limits", { videoId, issues });
+  }
   const mergedLocalizations: Localizations = {
     ...existingLocs,
-    ...newLocalizations,
+    ...safeLocalizations,
   };
 
   const res = await withRetry(

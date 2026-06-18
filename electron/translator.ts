@@ -3,6 +3,7 @@ import { findLanguage } from "../shared/languages";
 import type { Localization } from "../shared/types";
 import { stripJsonFences } from "./json";
 import { titleDescriptionSchema, cueBatchSchema } from "./validation";
+import { YOUTUBE_LIMITS } from "../shared/localizationLimits";
 import { withRetry } from "./retry";
 import { buildGlossaryInstruction } from "./glossary";
 import { getSettings } from "./store";
@@ -84,7 +85,12 @@ export async function translateTitleAndDescription(
   const system = `${TRANSLATE_SYSTEM}
 
 You must respond with valid JSON only. No prose, no markdown fences. Schema:
-{"title": "<translated title>", "description": "<translated description>"}${glossaryClause()}`;
+{"title": "...translated title...", "description": "...translated description..."}
+
+YouTube field limits — you MUST obey these or the upload is rejected:
+- "title": at most ${YOUTUBE_LIMITS.TITLE_MAX} characters. If a faithful translation would be longer, shorten it while keeping the meaning.
+- "description": at most ${YOUTUBE_LIMITS.DESCRIPTION_MAX} characters.
+- Never use the "<" or ">" characters anywhere in "title" or "description".${glossaryClause()}`;
 
   const prompt = `Translate the YouTube video title and description from ${sourceLabel} into ${languageLabel(targetLang)} (${targetLang}).
 

@@ -10,6 +10,7 @@ import {
 } from "./youtube";
 import { translateTitleAndDescription } from "./translator";
 import { translateSRT } from "./subtitles";
+import { saveLocalizationsSnapshot } from "./translationsExport";
 import { recordJobStart, recordJobFinish } from "./jobs";
 import type { ProgressEvent } from "../shared/api";
 import type {
@@ -97,7 +98,51 @@ export async function translateTitleDescriptionMulti(
   );
 
   if (Object.keys(newLocalizations).length > 0) {
-    await updateVideoLocalizations(account, videoId, newLocalizations);
+    // Persist a local JSON snapshot first, so the translation work survives even
+    // if the YouTube upload below fails (quota, invalidVideoMetadata, etc.).
+    try {
+      const snapshotPath = await saveLocalizationsSnapshot({
+        jobId,
+        videoId,
+        videoTitle: video.title,
+        sourceLang,
+        localizations: newLocalizations,
+      });
+      log.info("[orchestrator] saved local translations snapshot", { snapshotPath });
+    } catch (err) {
+      log.error("[orchestrator] failed to save translations snapshot", {
+        err: String(err),
+      });
+    }
+
+    try {
+      await updateVideoLocalizations(account, videoId, newLocalizations);
+    } catch (err) {
+      const message = String(err);
+      log.error("[orchestrator] failed to upload localizations to YouTube", {
+        videoId,
+        err: message,
+      });
+      // The translations were produced and saved locally, but none reached
+      // YouTube — report them as failed (not updated) and surface the error.
+      recordJobFinish(jobId, {
+        status: "failed",
+        updated: [],
+        failed: updated,
+        error: message,
+        finishedAt: Date.now(),
+      });
+      emit({
+        jobId,
+        videoId,
+        step: "title_description",
+        status: "failed",
+        done,
+        total,
+        error: message,
+      });
+      throw err;
+    }
   }
 
   recordJobFinish(jobId, {
